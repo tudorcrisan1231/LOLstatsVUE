@@ -1,0 +1,80 @@
+body {
+  background-color: #16161a;
+}
+.home {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.6rem;
+  min-height: 100vh;
+  color: white;
+}
+.free_to_play {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.news {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3rem;
+  &_title {
+    grid-column: 1/-1;
+    align-self: end;
+    justify-self: start;
+    font-size: 1.6rem;
+    //color: $color-header;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  &_article {
+    align-self: center;
+    display: flex;
+    align-items: center;
+    //justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+
+    outline: 1px solid rgba(169, 169, 169, 0.3);
+    //outline: 1px solid rgba($color-aqua,.4);
+    outline-offset: -0.5rem;
+
+    &_details {
+      margin-left: 1rem;
+    }
+
+    &_game {
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      //color: $color-header;
+    }
+
+    &_description {
+      font-size: 1.4rem;
+      //color: $color-paragraph;
+    }
+
+    transition: all 0.2s;
+
+    &:hover {
+      .news_img {
+        transform: scale(0.9);
+      }
+      transform: translateY(-3px);
+      //box-shadow: 1px 2px 22px 7px rgba(0, 0, 0, 0.3);
+      outline-offset: 0rem;
+    }
+    &:active {
+      transform: translateY(3px);
+      //box-shadow: 1px 2px 22px 7px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  &_img {
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    transition: all 0.2s;
+  }
+}
