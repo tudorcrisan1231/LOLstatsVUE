@@ -2,30 +2,67 @@ body {
   background-color: #16161a;
 }
 .home {
-  width: 60%;
+  width: 68%;
   margin-left: auto;
   margin-right: auto;
   font-size: 1.6rem;
   min-height: 100vh;
   color: white;
+  border-right: 1px solid rgba(#72757e, 0.1);
+  border-left: 1px solid rgba(#72757e, 0.1);
+
+  padding: 0 4rem 0 4rem;
+
+  @media screen and (max-width: 1550px) {
+    width: 70%;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 80%;
+  }
+  @media screen and (max-width: 1000px) {
+    width: 90%;
+    border-right: none;
+    border-left: none;
+  }
+
+  & > * {
+    margin-bottom: 8rem;
+  }
 }
 .free_to_play {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  &_title {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #94a1b2;
+  }
+  &_img {
+    width: 9rem;
+    height: auto;
+  }
 }
 
 .news {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 3rem;
+
+  @media screen and (max-width: 1050px) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  @media screen and (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
+
   &_title {
-    grid-column: 1/-1;
-    align-self: end;
-    justify-self: start;
-    font-size: 1.6rem;
-    //color: $color-header;
-    font-weight: 300;
-    line-height: 1;
+    text-align: left;
+    margin-bottom: 2rem;
+    color: #94a1b2;
   }
 
   &_article {
@@ -47,12 +84,13 @@ body {
     &_game {
       font-size: 1.6rem;
       text-transform: uppercase;
-      //color: $color-header;
+      color: #fffffe;
     }
 
     &_description {
       font-size: 1.4rem;
-      //color: $color-paragraph;
+      color: #94a1b2;
+      margin-right: 0.5rem;
     }
 
     transition: all 0.2s;
@@ -76,5 +114,58 @@ body {
     height: 50%;
     object-fit: cover;
     transition: all 0.2s;
+  }
+}
+.primary_img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  height: 30rem;
+  padding-top: 4rem;
+}
+.search {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+
+  &_region {
+    padding: 1rem;
+    outline: none;
+    font-family: inherit;
+    font-size: 1.6rem;
+  }
+
+  &_input {
+    padding: 1.5rem 0 1.5rem 0.5rem;
+    width: 40%;
+    outline: none;
+    font-family: inherit;
+    font-size: 1.6rem;
+
+    @media screen and (max-width: 1000px) {
+      width: 90%;
+    }
+  }
+
+  ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #fffffe;
+  }
+  &_btn {
+    text-align: center;
+    outline: none;
+    padding: 0 2rem 0 2rem;
+    cursor: pointer;
+    background-color: #7f5af0;
+    border: none;
+
+    svg {
+      width: 2.5rem;
+      height: 2.5rem;
+      color: #fffffe;
+    }
   }
 }

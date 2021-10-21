@@ -1,52 +1,74 @@
 <template>
   <div class="home">
     <!--<HelloWorld msg="Welcome to Your Vue.js App" />-->
+    <!--<div>
+      <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_iyocvb9g.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay class="lottie-player"></lottie-player>
+    </div>-->
+    <img src="../assets/vex.png" alt="" class="primary_img" />
 
-    <select v-model="region">
-      <option v-for="i in regions" :key="i" :value="i.value">
-        {{ i.name }}
-      </option>
-    </select>
+    <div class="search">
+      <select v-model="region" class="search_region">
+        <option v-for="i in regions" :key="i" :value="i.value">
+          {{ i.name }}
+        </option>
+      </select>
 
-    <input
-      type="text"
-      placeholder="game tag"
-      v-model="name"
-      @keyup.enter="getData()"
-    />
+      <input
+        type="text"
+        placeholder="Summoner Name..."
+        v-model="name"
+        @keyup.enter="getData()"
+        class="search_input"
+      />
 
-    <button @click="getData()">Search</button>
+      <button @click="getData()" class="search_btn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          aria-hidden="true"
+          role="img"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 12 12"
+        >
+          <g fill="none">
+            <path
+              d="M5 1a4 4 0 1 0 2.453 7.16l2.693 2.694a.5.5 0 0 0 .707-.708L8.16 7.453A4 4 0 0 0 5 1zM2 5a3 3 0 1 1 6 0a3 3 0 0 1-6 0z"
+              fill="currentColor"
+            />
+          </g>
+        </svg>
+      </button>
+    </div>
 
-    <div class="free_to_play">
-      <div v-for="i in int.dataFreeChamps.freeChampionIds" :key="i">
-        <img
-          :src="
-            'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' +
-            i +
-            '.png'
-          "
-          alt=""
-          width="100"
-          height="100"
-        />
+    <div class="free_to_play_container">
+      <h4 class="free_to_play_title">Free to play champions:</h4>
+      <div class="free_to_play">
+        <div v-for="i in int.dataFreeChamps.freeChampionIds" :key="i">
+          <img
+            :src="
+              'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' +
+              i +
+              '.png'
+            "
+            alt=""
+            class="free_to_play_img"
+          />
+        </div>
       </div>
     </div>
 
-    <div class="news">
-      <div v-for="i in news" :key="i">
-        <a class="news_article news_1" :href="i.link" target="_blank">
-          <img
-            :src="i.img"
-            alt="patch_notes"
-            class="news_img"
-            width="200"
-            height="200"
-          />
-          <div class="news_article_details">
-            <h3 class="news_article_game asd1">{{ i.name }}</h3>
-            <p class="news_article_description">{{ i.description }}</p>
-          </div>
-        </a>
+    <div class="news_container">
+      <h4 class="news_title">League of Legends news and useful links:</h4>
+      <div class="news">
+        <div v-for="i in news" :key="i">
+          <a class="news_article" :href="i.link" target="_blank">
+            <img :src="i.img" alt="patch_notes" class="news_img" />
+            <div class="news_article_details">
+              <h3 class="news_article_game">{{ i.name }}</h3>
+              <p class="news_article_description">{{ i.description }}</p>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
