@@ -44,15 +44,21 @@
       <h4 class="free_to_play_title">Free to play champions:</h4>
       <div class="free_to_play">
         <div v-for="i in int.dataFreeChamps.freeChampionIds" :key="i">
-          <img
-            :src="
-              'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' +
-              i +
-              '.png'
-            "
-            alt=""
-            class="free_to_play_img"
-          />
+          <Popper placement="top" arrow openDelay="200">
+            <img
+              :src="
+                'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' +
+                i +
+                '.png'
+              "
+              alt=""
+              class="free_to_play_img"
+              @click="getChampsName(i)"
+            />
+            <template #content>
+              <div>{{ int.freeChampsName }}</div>
+            </template>
+          </Popper>
         </div>
       </div>
     </div>
@@ -80,11 +86,13 @@
 
 import { ref, reactive } from "vue";
 import axios from "axios";
+import Popper from "vue3-popper";
 
 export default {
   name: "Home",
   components: {
     // HelloWorld,
+    Popper,
   },
   setup() {
     const name = ref(""); //summoners name
@@ -93,6 +101,7 @@ export default {
       //data
       dataFreeChamps: "",
       dataAccount: null,
+      freeChampsName: null,
     });
 
     const regions = ref([
@@ -167,8 +176,16 @@ export default {
       axios(`http://localhost:3000/champion-v3`) // free champs rotation
         .then((res) => {
           int.dataFreeChamps = res.data;
-          console.log(res.data);
+          //console.log(res.data);
         });
+    }
+
+    function getChampsName(key) {
+      axios(
+        `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champions/${key}.json`
+      ).then((res1) => {
+        int.freeChampsName = res1.data.name;
+      });
     }
 
     return {
@@ -179,6 +196,7 @@ export default {
       region,
       regions,
       news,
+      getChampsName,
     };
   },
   mounted() {
