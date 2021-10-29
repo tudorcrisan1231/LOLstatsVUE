@@ -18,6 +18,7 @@ export default {
   name: "Match",
   setup() {
     const data = reactive({
+      //parametrii bagati in Home.vue
       //data
       name: "",
       region: "",

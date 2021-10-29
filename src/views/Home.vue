@@ -43,7 +43,7 @@
           </svg>
         </button>
       </router-link>
-      <!--cand sunt completate campurile cu regiune si nume, atunci se poate executa doar rounter-link ul, pana atunci se afiseaza simplu butonul, fara functie-->
+      <!--cand sunt completate campurile cu regiune si nume, atunci se poate executa doar rounter-link ul (da submit la form), pana atunci se afiseaza simplu butonul, fara functie-->
 
       <button class="search_btn" v-else>
         <svg
