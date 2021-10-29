@@ -7,7 +7,7 @@
     <img src="../assets/vex.png" alt="" class="primary_img" />
 
     <form class="search">
-      <select v-model="region" class="search_region">
+      <select v-model="region" class="search_region" required>
         <option v-for="i in regions" :key="i" :value="i.value">
           {{ i.name }}
         </option>
@@ -18,8 +18,13 @@
         placeholder="Summoner Name..."
         v-model="name"
         class="search_input"
+        required
       />
-      <router-link :to="'/' + region + '/' + name" class="search_btn_container">
+      <router-link
+        v-if="name && region"
+        :to="'/' + region + '/' + name"
+        class="search_btn_container"
+      >
         <button class="search_btn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,6 +43,25 @@
           </svg>
         </button>
       </router-link>
+      <!--cand sunt completate campurile cu regiune si nume, atunci se poate executa doar rounter-link ul, pana atunci se afiseaza simplu butonul, fara functie-->
+
+      <button class="search_btn" v-else>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          aria-hidden="true"
+          role="img"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 12 12"
+        >
+          <g fill="none">
+            <path
+              d="M5 1a4 4 0 1 0 2.453 7.16l2.693 2.694a.5.5 0 0 0 .707-.708L8.16 7.453A4 4 0 0 0 5 1zM2 5a3 3 0 1 1 6 0a3 3 0 0 1-6 0z"
+              fill="currentColor"
+            />
+          </g>
+        </svg>
+      </button>
     </form>
 
     <div class="free_to_play_container">
