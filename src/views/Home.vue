@@ -6,7 +6,7 @@
     </div>-->
     <img src="../assets/vex.png" alt="" class="primary_img" />
 
-    <div class="search">
+    <form class="search">
       <select v-model="region" class="search_region">
         <option v-for="i in regions" :key="i" :value="i.value">
           {{ i.name }}
@@ -17,28 +17,28 @@
         type="text"
         placeholder="Summoner Name..."
         v-model="name"
-        @keyup.enter="getData()"
         class="search_input"
       />
-
-      <button @click="getData()" class="search_btn">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          aria-hidden="true"
-          role="img"
-          preserveAspectRatio="xMidYMid meet"
-          viewBox="0 0 12 12"
-        >
-          <g fill="none">
-            <path
-              d="M5 1a4 4 0 1 0 2.453 7.16l2.693 2.694a.5.5 0 0 0 .707-.708L8.16 7.453A4 4 0 0 0 5 1zM2 5a3 3 0 1 1 6 0a3 3 0 0 1-6 0z"
-              fill="currentColor"
-            />
-          </g>
-        </svg>
-      </button>
-    </div>
+      <router-link :to="'/' + region + '/' + name" class="search_btn_container">
+        <button class="search_btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            aria-hidden="true"
+            role="img"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 12 12"
+          >
+            <g fill="none">
+              <path
+                d="M5 1a4 4 0 1 0 2.453 7.16l2.693 2.694a.5.5 0 0 0 .707-.708L8.16 7.453A4 4 0 0 0 5 1zM2 5a3 3 0 1 1 6 0a3 3 0 0 1-6 0z"
+                fill="currentColor"
+              />
+            </g>
+          </svg>
+        </button>
+      </router-link>
+    </form>
 
     <div class="free_to_play_container">
       <h4 class="free_to_play_title">Free to play champions:</h4>
@@ -100,7 +100,6 @@ export default {
     const int = reactive({
       //data
       dataFreeChamps: "",
-      dataAccount: null,
       freeChampsName: null,
     });
 
@@ -163,15 +162,6 @@ export default {
       },
     ]);
 
-    function getData() {
-      //get data from backend
-      axios(`http://localhost:3000/summoner-v4/${region.value}/${name.value}`) // account details
-        .then((res) => {
-          int.dataAccount = res.data;
-          console.log(res.data);
-        });
-    }
-
     function getFreeToPlay() {
       axios(`http://localhost:3000/champion-v3`) // free champs rotation
         .then((res) => {
@@ -190,7 +180,6 @@ export default {
 
     return {
       int,
-      getData,
       getFreeToPlay,
       name,
       region,
