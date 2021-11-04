@@ -36,6 +36,23 @@ app.get("/summoner-v4/:region/:name", async (request, response) => {
   });
 });
 
+//LEAGUE-V4    date despre rank dupa summoner id
+
+app.get("/league-v4/:region/:summonerID", async (request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+
+  const summonerID = request.params.summonerID;
+  const region = request.params.region;
+  //console.log(summonerID);
+
+  axios(
+    `https://${region}.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerID}?api_key=${api_key}`
+  ).then((res) => {
+    response.send(res.data);
+    console.log(res.data);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

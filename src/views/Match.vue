@@ -3,6 +3,7 @@
     <h1>This is an about page {{ data.name }} {{ data.region }}</h1>
     <p style="color: #ffffff" v-if="account.dataAccount">
       {{ account.dataAccount }}
+      {{ account.dataRank }}
     </p>
     <p style="color: #ffffff" v-else>Account not found</p>
   </div>
@@ -26,13 +27,24 @@ export default {
 
     const account = reactive({
       dataAccount: null,
+      dataRank: null,
     });
 
-    function getData() {
+    async function getData() {
       //get data from backend
-      axios(`http://localhost:3000/summoner-v4/${data.region}/${data.name}`) // account details
+      await axios(
+        `http://localhost:3000/summoner-v4/${data.region}/${data.name}`
+      ) // account details
         .then((res) => {
           account.dataAccount = res.data;
+          console.log(res.data);
+        });
+
+      await axios(
+        `http://localhost:3000/league-v4/${data.region}/${account.dataAccount.id}`
+      ) // rank details
+        .then((res) => {
+          account.dataRank = res.data;
           console.log(res.data);
         });
     }
