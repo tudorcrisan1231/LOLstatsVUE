@@ -36,6 +36,7 @@ body {
   line-height: 1.7;
   overflow-x: hidden;
   box-sizing: border-box;
+  color: #fffffe;
 }
 * {
   margin: 0;

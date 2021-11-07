@@ -1,11 +1,11 @@
 <template>
   <div class="about">
-    <h1>This is an about page {{ data.name }} {{ data.region }}</h1>
-    <p style="color: #ffffff" v-if="account.dataAccount">
-      {{ account.dataAccount }}
-      {{ account.dataRank }}
-    </p>
-    <p style="color: #ffffff" v-else>Account not found</p>
+    <div class="about_left">
+      <base-stats :data="account.dataAccount"></base-stats>
+      <ranks :ranks="account.dataRank"></ranks>
+    </div>
+
+    <div class="about_right"></div>
   </div>
 </template>
 
@@ -15,8 +15,15 @@ import { reactive } from "vue";
 import axios from "axios";
 //import Popper from "vue3-popper";
 
+import baseStats from "../components/baseStats.vue";
+import ranks from "../components/ranks.vue";
+
 export default {
   name: "Match",
+  components: {
+    baseStats: baseStats,
+    ranks: ranks,
+  },
   setup() {
     const data = reactive({
       //parametrii bagati in Home.vue
@@ -64,3 +71,15 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.about {
+  margin-left: 20%;
+  margin-right: 20%;
+  height: 100vh;
+  margin-top: 5rem;
+
+  display: grid;
+  grid-template-columns: 35% 65%;
+}
+</style>

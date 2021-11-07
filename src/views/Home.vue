@@ -4,7 +4,7 @@
     <!--<div>
       <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_iyocvb9g.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay class="lottie-player"></lottie-player>
     </div>-->
-    <img src="../assets/vex.png" alt="" class="primary_img" />
+    <img src="../assets/illaoi.png" alt="" class="primary_img" />
 
     <form class="search">
       <select v-model="region" class="search_region" required>
