@@ -53,6 +53,40 @@ app.get("/league-v4/:region/:summonerID", async (request, response) => {
   });
 });
 
+//MATCH-V5    match history (match id)
+
+app.get("/match-history-v5/:region/:puuid", async (request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+
+  const puuid = request.params.puuid;
+  const region = request.params.region;
+  //console.log(summonerID);
+
+  axios(
+    `https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${api_key}`
+  ).then((res) => {
+    response.send(res.data);
+    //console.log(res.data);
+  });
+});
+
+//MATCH-V5    match data (by match id)
+
+app.get("/match-data-v5/:region/:matchID", async (request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+
+  const matchID = request.params.matchID;
+  const region = request.params.region;
+  //console.log(summonerID);
+
+  axios(
+    `https://${region}.api.riotgames.com/lol/match/v5/matches/${matchID}?api_key=${api_key}`
+  ).then((res) => {
+    response.send(res.data);
+    //console.log(res.data);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
