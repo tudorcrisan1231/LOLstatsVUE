@@ -20,33 +20,35 @@
           alt="champ img"
         />
 
-        <div
-          v-for="i in [
-            'item0',
-            'item1',
-            'item2',
-            'item3',
-            'item4',
-            'item5',
-            'item6',
-          ]"
-          :key="i"
-        >
-          <div v-if="match.info.participants[mainPlayer.poz][i] == 0">
-            <img
-              src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png"
-              alt="placeholder"
-            />
-          </div>
-          <div v-else>
-            <img
-              :src="
-                'http://ddragon.leagueoflegends.com/cdn/11.23.1/img/item/' +
-                match.info.participants[mainPlayer.poz][i] +
-                '.png'
-              "
-              alt="item"
-            />
+        <div class="match_items">
+          <div
+            v-for="i in [
+              'item0',
+              'item1',
+              'item2',
+              'item3',
+              'item4',
+              'item5',
+              'item6',
+            ]"
+            :key="i"
+          >
+            <div v-if="match.info.participants[mainPlayer.poz][i] == 0">
+              <img
+                src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png"
+                alt="placeholder"
+              />
+            </div>
+            <div v-else>
+              <img
+                :src="
+                  'http://ddragon.leagueoflegends.com/cdn/11.23.1/img/item/' +
+                  match.info.participants[mainPlayer.poz][i] +
+                  '.png'
+                "
+                alt="item"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -154,6 +156,10 @@ export default {
 <style scoped lang="scss">
 .match {
   padding: 0.5rem 1rem 0.5rem 1rem;
+
+  &_items {
+    display: flex;
+  }
 }
 .win {
   background-image: linear-gradient(
