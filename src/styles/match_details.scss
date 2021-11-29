@@ -1,0 +1,122 @@
+.match {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  display: flex;
+  text-align: center;
+  font-size: 1.2rem;
+
+  img {
+    border-radius: 3px;
+    object-fit: cover;
+  }
+  &_details {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &_time {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &_champ {
+      img {
+        width: 6rem;
+        height: 6rem;
+      }
+    }
+
+    &_spells {
+      display: flex;
+      flex-direction: column;
+      img {
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-top: 0.5rem;
+      }
+    }
+
+    &_score {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &_items {
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    justify-items: center;
+    align-items: center;
+    img {
+      width: 3rem;
+      height: 3rem;
+      margin-right: 0.3rem;
+    }
+
+    &_container {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &_participanti {
+    display: flex;
+    flex-direction: column;
+
+    img {
+      width: 2rem;
+      height: 2rem;
+      object-fit: cover;
+      margin-right: 0.5rem;
+    }
+    &_name {
+      display: flex;
+      align-items: center;
+      margin-right: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+  }
+
+  &_btn {
+    height: 100%;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}
+.win {
+  background-image: linear-gradient(
+    to left,
+    rgba(32, 178, 170, 0.7),
+    rgba(32, 178, 170, 0.1)
+  );
+  border-left: 1px solid rgb(32, 178, 170);
+  height: auto;
+  padding: 0.5rem;
+}
+.lose {
+  background-image: linear-gradient(
+    to left,
+    rgba(240, 128, 128, 0.7),
+    rgba(240, 128, 128, 0.1)
+  );
+  border-left: 1px solid rgb(240, 128, 128);
+  height: auto;
+  padding: 0.5rem;
+}
+
+.win_btn {
+  background-color: rgba(32, 178, 170, 0.7);
+}
+.lose_btn {
+  background-color: rgba(240, 128, 128, 0.7);
+}

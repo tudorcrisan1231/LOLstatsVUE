@@ -15,6 +15,8 @@
             :match="account.matchData[index]"
             :summonersPuuid="account.dataAccount.puuid"
             :queueJson="account.queue"
+            :spellsJson="account.spells"
+            :runesJson="account.runes"
           ></matchData>
         </div>
       </div>
@@ -56,6 +58,8 @@ export default {
       matchHistory: [],
       matchData: [],
       queue: null, //queue json
+      spells: null, // spells json
+      runes: null, // runes json
     });
 
     function getRegion() {
@@ -86,6 +90,20 @@ export default {
           console.log(res.data);
         }
       );
+
+      axios(
+        "http://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/summoner.json"
+      ).then((res) => {
+        account.spells = res.data;
+        console.log(res.data);
+      });
+
+      axios(
+        "http://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/runesReforged.json"
+      ).then((res) => {
+        account.runes = res.data;
+        console.log(res.data);
+      });
 
       //get data from backend
       await axios(
@@ -145,9 +163,8 @@ export default {
 
 <style scoped lang="scss">
 .about {
-  margin-left: 20%;
-  margin-right: 20%;
-  height: 100vh;
+  margin-left: 10%;
+  margin-right: 10%;
   margin-top: 5rem;
 
   display: grid;
