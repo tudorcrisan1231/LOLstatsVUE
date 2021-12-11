@@ -26,43 +26,74 @@
         </div>
 
         <div class="match_details_spells">
-          <img
-            :src="
-              'http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/' +
-              mainPlayer.spellD +
-              '.png'
-            "
-            alt="spell img"
-            class="match_details_spells_spellD"
-          />
+          <Popper placement="top" arrow hover>
+            <img
+              :src="
+                'http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/' +
+                mainPlayer.spellD[0] +
+                '.png'
+              "
+              alt="spell img"
+              class="match_details_spells_spellD"
+            />
 
-          <img
-            :src="
-              'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/' +
-              mainPlayer.runePrimary
-            "
-            alt="runes img"
-            class="match_details_spells_runePrimary"
-          />
+            <template #content>
+              <p class="spell_name">{{ mainPlayer.spellD[2] }}</p>
+              {{ mainPlayer.spellD[1] }}
+            </template>
+          </Popper>
 
-          <img
-            :src="
-              'http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/' +
-              mainPlayer.spellF +
-              '.png'
-            "
-            alt="spell img"
-            class="match_details_spells_spellF"
-          />
+          <Popper placement="top" arrow hover>
+            <img
+              :src="
+                'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/' +
+                mainPlayer.runePrimary[0]
+              "
+              alt="runes img"
+              class="match_details_spells_runePrimary"
+            />
+            <template #content>
+              <p class="spell_name">{{ mainPlayer.runePrimary[2] }}</p>
+              <p
+                style="max-width: 400px"
+                v-html="mainPlayer.runePrimary[1]"
+              ></p>
+            </template>
+          </Popper>
 
-          <img
-            :src="
-              'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/' +
-              mainPlayer.runeSecondary
-            "
-            alt="runes img"
-            class="match_details_spells_runeSecondary"
-          />
+          <Popper placement="top" arrow hover>
+            <img
+              :src="
+                'http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/' +
+                mainPlayer.spellF[0] +
+                '.png'
+              "
+              alt="spell img"
+              class="match_details_spells_spellF"
+            />
+
+            <template #content>
+              <p class="spell_name">{{ mainPlayer.spellF[2] }}</p>
+              {{ mainPlayer.spellF[1] }}
+            </template>
+          </Popper>
+
+          <Popper placement="top" arrow hover>
+            <img
+              :src="
+                'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/' +
+                mainPlayer.runeSecondary[0]
+              "
+              alt="runes img"
+              class="match_details_spells_runeSecondary"
+            />
+            <template #content>
+              <p
+                style="max-width: 400px"
+                v-html="mainPlayer.runeSecondary[1]"
+              ></p>
+            </template>
+          </Popper>
         </div>
 
         <div class="match_details_score">
@@ -223,9 +254,13 @@
 
 <script>
 import { reactive } from "vue";
+import Popper from "vue3-popper";
 
 export default {
   name: "matchData",
+  components: {
+    Popper,
+  },
   props: {
     match: Object, //datele despre meci (un singur meci)
     summonersPuuid: String, //puuid ul player ului cautat
@@ -241,10 +276,10 @@ export default {
       gameDuration: null,
       gameTimeAgo: null,
       kp: 0,
-      spellD: null,
-      spellF: null,
-      runePrimary: null,
-      runeSecondary: null,
+      spellD: [], // pe pozitia 0 am spellu ul in sine, pe poz 1 am descrierea, pe poz 2 am numele
+      spellF: [],
+      runePrimary: [], // pe pozitia 0 am runa in sine, pe poz 1 am descrierea, pe poz 2 am numele
+      runeSecondary: [],
     });
 
     function getMainPlayer() {
@@ -273,7 +308,9 @@ export default {
           spells[i][1].key ==
           this.match.info.participants[mainPlayer.poz].summoner1Id
         ) {
-          mainPlayer.spellD = spells[i][1].id;
+          mainPlayer.spellD[0] = spells[i][1].id;
+          mainPlayer.spellD[1] = spells[i][1].description;
+          mainPlayer.spellD[2] = spells[i][1].name;
         }
       }
 
@@ -282,7 +319,9 @@ export default {
           spells[j][1].key ==
           this.match.info.participants[mainPlayer.poz].summoner2Id
         ) {
-          mainPlayer.spellF = spells[j][1].id;
+          mainPlayer.spellF[0] = spells[j][1].id;
+          mainPlayer.spellF[1] = spells[j][1].description;
+          mainPlayer.spellF[2] = spells[j][1].name;
         }
       }
 
@@ -295,8 +334,12 @@ export default {
             this.match.info.participants[mainPlayer.poz].perks.styles[0]
               .selections[0].perk
           ) {
-            mainPlayer.runePrimary =
+            mainPlayer.runePrimary[0] =
               this.runesJson[i].slots[0].runes[j].icon.toLowerCase();
+            mainPlayer.runePrimary[1] =
+              this.runesJson[i].slots[0].runes[j].longDesc;
+            mainPlayer.runePrimary[2] =
+              this.runesJson[i].slots[0].runes[j].name;
           }
         }
       }
@@ -306,7 +349,8 @@ export default {
           this.runesJson[i].id ==
           this.match.info.participants[mainPlayer.poz].perks.styles[1].style
         ) {
-          mainPlayer.runeSecondary = this.runesJson[i].icon.toLowerCase();
+          mainPlayer.runeSecondary[0] = this.runesJson[i].icon.toLowerCase();
+          mainPlayer.runeSecondary[1] = this.runesJson[i].name;
         }
       }
     }

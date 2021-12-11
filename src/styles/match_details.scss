@@ -35,6 +35,7 @@
         height: 2.5rem;
         margin-right: 0.5rem;
         margin-top: 0.5rem;
+        cursor: pointer;
       }
 
       &_runePrimary {
@@ -42,7 +43,10 @@
         border-radius: 50% !important;
       }
     }
-
+    .spell_name {
+      color: rgb(207, 179, 60);
+      font-weight: bold;
+    }
     &_score {
       display: flex;
       flex-direction: column;
