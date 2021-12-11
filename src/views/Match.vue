@@ -2,7 +2,10 @@
   <div class="about">
     <div class="about_left">
       <base-stats :data="account.dataAccount"></base-stats>
-      <ranks :ranks="account.dataRank"></ranks>
+      <ranks
+        :rank_solo="account.dataRank_solo"
+        :rank_flex="account.dataRank_flex"
+      ></ranks>
     </div>
 
     <div class="about_right">
@@ -11,13 +14,16 @@
       </div>
       <div class="about_right_matchesList">
         <div v-for="(i, index) in account.matchData" :key="i">
-          <matchData
-            :match="account.matchData[index]"
-            :summonersPuuid="account.dataAccount.puuid"
-            :queueJson="account.queue"
-            :spellsJson="account.spells"
-            :runesJson="account.runes"
-          ></matchData>
+          <div v-if="account.matchData[index].info.gameType != 'CUSTOM_GAME'">
+            <matchData
+              :match="account.matchData[index]"
+              :summonersPuuid="account.dataAccount.puuid"
+              :region="data.region"
+              :queueJson="account.queue"
+              :spellsJson="account.spells"
+              :runesJson="account.runes"
+            ></matchData>
+          </div>
         </div>
       </div>
     </div>
@@ -54,7 +60,8 @@ export default {
 
     const account = reactive({
       dataAccount: null,
-      dataRank: null,
+      dataRank_solo: null,
+      dataRank_flex: null,
       matchHistory: [],
       matchData: [],
       queue: null, //queue json
@@ -118,8 +125,18 @@ export default {
         `http://localhost:3000/league-v4/${data.region}/${account.dataAccount.id}`
       ) // rank details
         .then((res) => {
-          account.dataRank = res.data;
           console.log(res.data);
+
+          for (let i = 0; i < res.data.length; i++) {
+            if (res.data[i].queueType === "RANKED_SOLO_5x5") {
+              account.dataRank_solo = res.data[i];
+            }
+          }
+          for (let i = 0; i < res.data.length; i++) {
+            if (res.data[i].queueType === "RANKED_FLEX_SR") {
+              account.dataRank_flex = res.data[i];
+            }
+          }
         });
 
       await axios(

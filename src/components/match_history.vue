@@ -33,7 +33,18 @@
               '.png'
             "
             alt="spell img"
+            class="match_details_spells_spellD"
           />
+
+          <img
+            :src="
+              'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/' +
+              mainPlayer.runePrimary
+            "
+            alt="runes img"
+            class="match_details_spells_runePrimary"
+          />
+
           <img
             :src="
               'http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/' +
@@ -41,6 +52,16 @@
               '.png'
             "
             alt="spell img"
+            class="match_details_spells_spellF"
+          />
+
+          <img
+            :src="
+              'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/' +
+              mainPlayer.runeSecondary
+            "
+            alt="runes img"
+            class="match_details_spells_runeSecondary"
           />
         </div>
 
@@ -134,7 +155,17 @@
                 "
                 alt="champ img"
               />
-              <p>{{ this.match.info.participants[index].summonerName }}</p>
+              <a
+                :href="
+                  '/' +
+                  this.region +
+                  '/' +
+                  this.match.info.participants[index].summonerName
+                "
+                ><p>
+                  {{ this.match.info.participants[index].summonerName }}
+                </p></a
+              >
             </div>
           </div>
         </div>
@@ -150,7 +181,15 @@
                 "
                 alt="champ img"
               />
-              <p>{{ this.match.info.participants[index].summonerName }}</p>
+              <a
+                :href="
+                  '/' +
+                  this.region +
+                  '/' +
+                  this.match.info.participants[index].summonerName
+                "
+                ><p>{{ this.match.info.participants[index].summonerName }}</p>
+              </a>
             </div>
           </div>
         </div>
@@ -190,6 +229,7 @@ export default {
   props: {
     match: Object, //datele despre meci (un singur meci)
     summonersPuuid: String, //puuid ul player ului cautat
+    region: String, //regiunea
     queueJson: Array, // un json cu toate queurile
     spellsJson: Object, //un json cu toate spell urile
     runesJson: Object, // un json cu toate runele
@@ -216,6 +256,7 @@ export default {
       }
       for (let i = 0; i < this.queueJson.length; i++) {
         //gasirea queului
+
         if (this.queueJson[i].queueId == this.match.info.queueId) {
           let res = this.queueJson[i].description.split(" ");
           res.pop();
@@ -246,6 +287,28 @@ export default {
       }
 
       //gasirea Runelor pricipale (main player)
+
+      for (let i = 0; i < this.runesJson.length; i++) {
+        for (let j = 0; j < this.runesJson[i].slots[0].runes.length; j++) {
+          if (
+            this.runesJson[i].slots[0].runes[j].id ==
+            this.match.info.participants[mainPlayer.poz].perks.styles[0]
+              .selections[0].perk
+          ) {
+            mainPlayer.runePrimary =
+              this.runesJson[i].slots[0].runes[j].icon.toLowerCase();
+          }
+        }
+      }
+
+      for (let i = 0; i < this.runesJson.length; i++) {
+        if (
+          this.runesJson[i].id ==
+          this.match.info.participants[mainPlayer.poz].perks.styles[1].style
+        ) {
+          mainPlayer.runeSecondary = this.runesJson[i].icon.toLowerCase();
+        }
+      }
     }
 
     function getTime() {

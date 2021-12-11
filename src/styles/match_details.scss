@@ -28,12 +28,18 @@
     }
 
     &_spells {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       img {
         width: 2.5rem;
         height: 2.5rem;
+        margin-right: 0.5rem;
         margin-top: 0.5rem;
+      }
+
+      &_runePrimary {
+        background-color: black;
+        border-radius: 50% !important;
       }
     }
 
@@ -63,6 +69,11 @@
   &_participanti {
     display: flex;
     flex-direction: column;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
     img {
       width: 2rem;
