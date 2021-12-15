@@ -22,6 +22,7 @@
               :queueJson="account.queue"
               :spellsJson="account.spells"
               :runesJson="account.runes"
+              :itemsJson="account.items"
             ></matchData>
           </div>
         </div>
@@ -67,6 +68,7 @@ export default {
       queue: null, //queue json
       spells: null, // spells json
       runes: null, // runes json
+      items: null, //items json
     });
 
     function getRegion() {
@@ -99,22 +101,31 @@ export default {
       );
 
       axios(
-        "http://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/summoner.json"
+        `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/summoner.json`
       ).then((res) => {
         account.spells = res.data;
         console.log(res.data);
       });
 
       axios(
-        "http://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/runesReforged.json"
+        `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/runesReforged.json`
       ).then((res) => {
         account.runes = res.data;
         console.log(res.data);
       });
 
+      axios(
+        `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/item.json`
+      ).then((res) => {
+        account.items = res.data;
+        console.log(res.data);
+      });
+
       //get data from backend
       await axios(
-        `http://localhost:3000/summoner-v4/${data.region}/${data.name}`
+        `http://localhost:3000/summoner-v4/${data.region}/${encodeURI(
+          data.name
+        )}` //ii pun encodeURI pt ca daca numele are caractere speciale il transforma in caractere care pot fi citite de pc
       ) // account details
         .then((res) => {
           account.dataAccount = res.data;
@@ -168,7 +179,7 @@ export default {
   },
   mounted() {
     const route = useRoute();
-    this.data.name = route.params.name; //get name from route
+    this.data.name = encodeURI(route.params.name); //get name from route, ii pun encodeURI pt ca daca numele are caractere speciale il transforma in caractere care pot fi citite de pc
     this.data.region = route.params.region; //get region from route
 
     this.getData();

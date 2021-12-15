@@ -29,7 +29,9 @@
           <Popper placement="top" arrow hover>
             <img
               :src="
-                'http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/' +
+                'http://ddragon.leagueoflegends.com/cdn/' +
+                this.lol_version +
+                '/img/spell/' +
                 mainPlayer.spellD[0] +
                 '.png'
               "
@@ -38,8 +40,10 @@
             />
 
             <template #content>
-              <p class="spell_name">{{ mainPlayer.spellD[2] }}</p>
-              {{ mainPlayer.spellD[1] }}
+              <div style="max-width: 400px">
+                <p class="spell_name">{{ mainPlayer.spellD[2] }}</p>
+                {{ mainPlayer.spellD[1] }}
+              </div>
             </template>
           </Popper>
 
@@ -64,7 +68,9 @@
           <Popper placement="top" arrow hover>
             <img
               :src="
-                'http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/' +
+                'http://ddragon.leagueoflegends.com/cdn/' +
+                this.lol_version +
+                '/img/spell/' +
                 mainPlayer.spellF[0] +
                 '.png'
               "
@@ -73,8 +79,10 @@
             />
 
             <template #content>
-              <p class="spell_name">{{ mainPlayer.spellF[2] }}</p>
-              {{ mainPlayer.spellF[1] }}
+              <div style="max-width: 400px">
+                <p class="spell_name">{{ mainPlayer.spellF[2] }}</p>
+                {{ mainPlayer.spellF[1] }}
+              </div>
             </template>
           </Popper>
 
@@ -152,20 +160,57 @@
               :key="i"
             >
               <div v-if="match.info.participants[mainPlayer.poz][i] == 0">
-                <img
-                  src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png"
-                  alt="placeholder"
-                />
+                <Popper placement="top" arrow hover>
+                  <img
+                    src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png"
+                    alt="placeholder"
+                  />
+
+                  <template #content>
+                    <p style="max-width: 400px">No item</p>
+                  </template>
+                </Popper>
               </div>
               <div v-else>
-                <img
-                  :src="
-                    'http://ddragon.leagueoflegends.com/cdn/11.23.1/img/item/' +
-                    match.info.participants[mainPlayer.poz][i] +
-                    '.png'
-                  "
-                  alt="item"
-                />
+                <Popper placement="top" arrow hover>
+                  <img
+                    :src="
+                      'http://ddragon.leagueoflegends.com/cdn/' +
+                      this.lol_version +
+                      '/img/item/' +
+                      match.info.participants[mainPlayer.poz][i] +
+                      '.png'
+                    "
+                    alt="item"
+                  />
+                  <template #content>
+                    <div style="text-align: left">
+                      <p class="spell_name">
+                        {{
+                          itemsJson.data[
+                            match.info.participants[mainPlayer.poz][i]
+                          ].name
+                        }}
+                      </p>
+                      <p
+                        style="max-width: 400px"
+                        v-html="
+                          itemsJson.data[
+                            match.info.participants[mainPlayer.poz][i]
+                          ].description
+                        "
+                      ></p>
+                      <p class="spell_name">
+                        Cost:
+                        {{
+                          itemsJson.data[
+                            match.info.participants[mainPlayer.poz][i]
+                          ].gold.total
+                        }}
+                      </p>
+                    </div>
+                  </template>
+                </Popper>
               </div>
             </div>
           </div>
@@ -268,6 +313,7 @@ export default {
     queueJson: Array, // un json cu toate queurile
     spellsJson: Object, //un json cu toate spell urile
     runesJson: Object, // un json cu toate runele
+    itemsJson: Object, // un json cu toate itemele
   },
   setup() {
     const mainPlayer = reactive({
@@ -281,6 +327,15 @@ export default {
       runePrimary: [], // pe pozitia 0 am runa in sine, pe poz 1 am descrierea, pe poz 2 am numele
       runeSecondary: [],
     });
+
+    // const items = reactive({
+    //   item1:null,
+    //   item2:null,
+    //   item3:null,
+    //   item4:null,
+    //   item5:null,
+    //   item6:null,
+    // });
 
     function getMainPlayer() {
       for (let i = 0; i < this.match.metadata.participants.length; i++) {
@@ -353,6 +408,12 @@ export default {
           mainPlayer.runeSecondary[1] = this.runesJson[i].name;
         }
       }
+
+      //gasirea itemelor (main player)
+
+      // for(let i = 0; i< this.itemsJson.data.length; i++) {
+      // if()
+      // }
     }
 
     function getTime() {
