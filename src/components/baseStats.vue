@@ -86,6 +86,34 @@ export default {
   gap: 0.5rem;
   align-items: center;
 
+  @media screen and (max-width: 1000px) {
+    display: flex;
+    flex-direction: column;
+    padding: 0 2rem 0 2rem;
+    text-align: center;
+
+    &_name {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      // padding: .5rem;
+      svg {
+        margin-left: 0rem;
+        margin: 0.5rem 0 1rem 0;
+      }
+    }
+  }
+  @media screen and (max-width: 500px) {
+    flex-direction: row;
+    text-align: left;
+    padding: 0;
+
+    &_name {
+      display: flex;
+      flex-direction: row;
+    }
+  }
   &_name {
     font-size: 2.4rem;
     display: flex;

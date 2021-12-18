@@ -1,8 +1,12 @@
 <template>
   <div class="about">
     <div class="about_left">
-      <base-stats :data="account.dataAccount"></base-stats>
+      <base-stats
+        :data="account.dataAccount"
+        class="about_left_profile"
+      ></base-stats>
       <ranks
+        class="about_left_rank"
         :rank_solo="account.dataRank_solo"
         :rank_flex="account.dataRank_flex"
       ></ranks>
@@ -199,6 +203,29 @@ export default {
   grid-template-columns: 35% 65%;
   gap: 3rem;
 
+  @media screen and (min-width: 2000px) {
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+
+  @media screen and (max-width: 1500px) {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  @media screen and (max-width: 1350px) {
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: 30% 70%;
+  }
+
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: 1fr;
+    margin-top: 2rem;
+  }
+
   &_right {
     &_summary {
       color: #fffffe;
@@ -213,6 +240,24 @@ export default {
       border: 1px solid rgba(#72757e, 0.2);
       font-size: 1.4rem;
       margin-bottom: 1rem;
+    }
+  }
+
+  &_left {
+    @media screen and (max-width: 1000px) {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 1rem;
+      align-items: stretch;
+
+      & > * {
+        height: 100%;
+        margin: 0;
+      }
+    }
+
+    @media screen and (max-width: 500px) {
+      grid-template-columns: 1fr;
     }
   }
 }

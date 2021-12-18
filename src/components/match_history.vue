@@ -188,7 +188,7 @@
                       <p class="spell_name">
                         {{
                           itemsJson.data[
-                            match.info.participants[mainPlayer.poz][i]
+                            match.info.participants[mainPlayer.poz][i] //se ia din json ul cu iteme, itemul cu id ul respectiv
                           ].name
                         }}
                       </p>
@@ -240,8 +240,8 @@
                 "
                 ><p>
                   {{ this.match.info.participants[index].summonerName }}
-                </p></a
-              >
+                </p>
+              </a>
             </div>
           </div>
         </div>
