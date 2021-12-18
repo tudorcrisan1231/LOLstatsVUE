@@ -196,8 +196,8 @@ export default {
 
 <style scoped lang="scss">
 .about {
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 15%;
+  margin-right: 15%;
   margin-top: 5rem;
 
   display: grid;
