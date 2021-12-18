@@ -103,7 +103,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .ranks {
-  margin-top: 2rem;
+  margin-top: 1rem;
   background-color: #242629;
   border: 1px solid rgba(#72757e, 0.2);
   font-size: 1.4rem;

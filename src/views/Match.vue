@@ -5,6 +5,7 @@
         :data="account.dataAccount"
         class="about_left_profile"
       ></base-stats>
+      <button class="about_left_liveBtn">Live Game!</button>
       <ranks
         class="about_left_rank"
         :rank_solo="account.dataRank_solo"
@@ -244,11 +245,35 @@ export default {
   }
 
   &_left {
+    display: flex;
+    flex-direction: column;
+
+    &_liveBtn {
+      padding: 1rem;
+      margin-top: 1rem;
+      background-color: rgb(32, 178, 170);
+      border: 1px solid rgba(#72757e, 0.2);
+      font-family: inherit;
+      font-weight: bold;
+      color: #fffffe;
+      cursor: pointer;
+
+      @media screen and (max-width: 500px) {
+        font-weight: normal;
+      }
+    }
+
     @media screen and (max-width: 1000px) {
       display: grid;
       grid-template-columns: max-content 1fr;
+      grid-template-rows: max-content max-content;
       gap: 1rem;
       align-items: stretch;
+
+      &_liveBtn {
+        grid-column: 1/-1;
+        grid-row: 2/-1;
+      }
 
       & > * {
         height: 100%;
