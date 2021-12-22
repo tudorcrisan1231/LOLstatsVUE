@@ -5,7 +5,8 @@
         :data="account.dataAccount"
         class="about_left_profile"
       ></base-stats>
-      <button class="about_left_liveBtn">Live Game!</button>
+
+      <button @click="account.openLiveGame = !account.openLiveGame" class="about_left_liveBtn">Live Game!</button>
       <ranks
         class="about_left_rank"
         :rank_solo="account.dataRank_solo"
@@ -14,6 +15,11 @@
     </div>
 
     <div class="about_right">
+
+      <div class="about_right_live" v-if="data.region && account.dataAccount && account.openLiveGame">
+        <liveGame :regionLive="data.region" :accountIdLive="account.dataAccount"></liveGame>
+      </div>
+
       <div class="about_right_summary">
         <recent_summary></recent_summary>
       </div>
@@ -46,6 +52,7 @@ import baseStats from "../components/baseStats.vue";
 import ranks from "../components/ranks.vue";
 import recent_summary from "../components/recent_summary.vue";
 import matchData from "../components/match_history.vue";
+import liveGame from "../components/liveGame.vue";
 
 export default {
   name: "Match",
@@ -54,6 +61,7 @@ export default {
     ranks: ranks,
     recent_summary: recent_summary,
     matchData: matchData,
+    liveGame: liveGame,
   },
   setup() {
     const data = reactive({
@@ -74,6 +82,7 @@ export default {
       spells: null, // spells json
       runes: null, // runes json
       items: null, //items json
+      openLiveGame:false,
     });
 
     function getRegion() {
@@ -173,6 +182,7 @@ export default {
           });
       }
       console.log(account.matchData);
+
     }
 
     return {
@@ -228,7 +238,7 @@ export default {
   }
 
   &_right {
-    &_summary {
+    &_summary,&_live {
       color: #fffffe;
       background-color: #242629;
       border: 1px solid rgba(#72757e, 0.2);

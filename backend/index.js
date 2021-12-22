@@ -87,6 +87,28 @@ app.get("/match-data-v5/:region/:matchID", async (request, response) => {
   });
 });
 
+
+
+
+//SPECTATOR-V4   live game data
+
+
+app.get("/spectator-v4/:region/:summonerID", async (request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+
+  const summonerID = request.params.summonerID;
+  const region = request.params.region;
+  //console.log(summonerID);
+
+  axios(
+    `https://${region}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${summonerID}?api_key=${api_key}`
+  ).then((res) => {
+    response.send(res.data);
+    //console.log(res.data);
+  });
+});
+
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
