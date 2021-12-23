@@ -12,12 +12,12 @@
     height: 100% !important;
     width: 100% !important;
     display: grid;
-    grid-template-columns: max-content min-content min-content max-content max-content min-content 10% 10% min-content;
+    grid-template-columns: 13% min-content min-content max-content max-content min-content 10% 10% min-content;
     align-items: center;
     justify-content: space-between;
 
     @media screen and (max-width: 650px) {
-      grid-template-columns: repeat(7, max-content);
+      grid-template-columns: 17% repeat(6, max-content);
     }
 
     @media screen and (max-width: 550px) {

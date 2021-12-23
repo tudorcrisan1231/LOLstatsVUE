@@ -7,8 +7,8 @@
       >
         <div class="match_details_time">
           <p>{{ mainPlayer.queue }}</p>
-          <p v-if="match.info.participants[mainPlayer.poz].win">Win</p>
-          <p v-else>Defeat</p>
+          <p v-if="match.info.participants[mainPlayer.poz].win" style="color: var(--color-win)">Win</p>
+          <p v-else style="color: var(--color-lose)">Defeat</p>
           <p v-if="mainPlayer.gameDuration">{{ mainPlayer.gameDuration }}</p>
           <p>{{ mainPlayer.gameTimeAgo }} ago</p>
         </div>
