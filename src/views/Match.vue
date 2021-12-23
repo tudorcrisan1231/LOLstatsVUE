@@ -17,7 +17,7 @@
     <div class="about_right">
 
       <div class="about_right_live" v-if="data.region && account.dataAccount && account.openLiveGame">
-        <liveGame :regionLive="data.region" :accountIdLive="account.dataAccount"></liveGame>
+        <liveGame :regionLive="data.region" :accountIdLive="account.dataAccount" :spellsJsonLive="account.spells"></liveGame>
       </div>
 
       <div class="about_right_summary">
