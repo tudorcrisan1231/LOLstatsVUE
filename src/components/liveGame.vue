@@ -1,10 +1,10 @@
 <template>
-<div>
+<div class="live">
     <div v-if="data.live">
         <div>{{this.regionLive}} {{this.accountIdLive.id}} {{data.live}}</div>
     </div>
     <div v-else>
-        <p>'{{this.accountIdLive.name}}' is not in an active game.</p>
+        <p class="live_notfound">'<span>{{this.accountIdLive.name}}</span>' is not in an active game.</p>
     </div>
 </div>
   <!-- <div>{{data.live}}</div> -->
@@ -45,6 +45,16 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+    .live {
+
+        &_notfound {
+            padding: .5rem;
+
+            span {
+                color: var(--color-win);
+            }
+        }
+    }
 
 </style>

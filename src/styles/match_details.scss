@@ -186,29 +186,29 @@
 .win {
   background-image: linear-gradient(
     to left,
-    rgba(32, 178, 170, 0.7),
-    rgba(32, 178, 170, 0.1)
+    var(--color-win07),
+    var(--color-win01)
   );
-  border-left: 1px solid rgb(32, 178, 170);
+  border-left: 1px solid var(--color-win);
   height: auto;
   padding: 0.5rem;
 }
 .lose {
   background-image: linear-gradient(
     to left,
-    rgba(240, 128, 128, 0.7),
-    rgba(240, 128, 128, 0.1)
+    var(--color-lose07),
+    var(--color-lose01)
   );
-  border-left: 1px solid rgb(240, 128, 128);
+  border-left: 1px solid var(--color-lose);
   height: auto;
   padding: 0.5rem;
 }
 
 .win_btn {
-  background-color: rgba(32, 178, 170, 0.7);
+  background-color: var(--color-win07);
 }
 .lose_btn {
-  background-color: rgba(240, 128, 128, 0.7);
+  background-color: var(--color-lose07);
 }
 .tooltip_style {
   max-width: 400px;

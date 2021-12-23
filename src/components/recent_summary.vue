@@ -17,5 +17,6 @@ export default {
 <style scoped lang="scss">
 .recent {
   height: 20rem;
+  padding: .5rem;
 }
 </style>

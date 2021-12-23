@@ -498,7 +498,7 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped lang="scss">
 @import "../styles/match_details.scss"; // search_page styles
 </style>

@@ -10,7 +10,7 @@
         </div>
         <div class="ranks_rank_text">
           <h3 class="ranks_rank_title">Ranked SOLO/DUO</h3>
-          <p style="color: rgb(32, 178, 170)">
+          <p style="color: var(--color-win)">
             {{ this.rank_solo.tier }} {{ this.rank_solo.rank }}
           </p>
           <p>
@@ -39,7 +39,7 @@
           </div>
           <div class="ranks_rank_text">
             <h3 class="ranks_rank_title">Ranked SOLO/DUO</h3>
-            <p style="color: rgb(32, 178, 170)">UNRANKED</p>
+            <p style="color: var(--color-win)">UNRANKED</p>
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@
         </div>
         <div class="ranks_rank_text">
           <h3 class="ranks_rank_title">Ranked FLEX</h3>
-          <p style="color: rgb(32, 178, 170)">
+          <p style="color: var(--color-win)">
             {{ this.rank_flex.tier }} {{ this.rank_flex.rank }}
           </p>
           <p>
@@ -82,7 +82,7 @@
           </div>
           <div class="ranks_rank_text">
             <h3 class="ranks_rank_title">Ranked FLEX</h3>
-            <p style="color: rgb(32, 178, 170)">UNRANKED</p>
+            <p style="color: var(--color-win)">UNRANKED</p>
           </div>
         </div>
       </div>

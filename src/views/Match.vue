@@ -261,7 +261,7 @@ export default {
     &_liveBtn {
       padding: 1rem;
       margin-top: 1rem;
-      background-color: rgb(32, 178, 170);
+      background-color: var(--color-win);
       border: 1px solid rgba(#72757e, 0.2);
       font-family: inherit;
       font-weight: bold;

@@ -9,6 +9,19 @@
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+:root {
+  // --color-win: #20B2AA;
+  --color-win: rgb(32,178,170);
+  --color-lose: rgb(240, 128, 128);
+
+  --color-win07: rgba(32, 178, 170, 0.7);
+  --color-win01: rgba(32, 178, 170, 0.1);
+
+  --color-lose07: rgba(240, 128, 128, 0.7);
+  --color-lose01: rgba(240, 128, 128, 0.1);
+
+}
 html {
   font-size: 62.5%;
   scroll-behavior: smooth;
