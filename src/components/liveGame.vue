@@ -1,6 +1,13 @@
 <template>
 <div class="live">
     <div v-if="data.live">
+
+        <div class="live_tab">
+            <p>{{data.queue}}</p>
+            <p>{{data.map}}</p>
+            <p>{{data.time}}</p>
+        </div>
+
         <div class="live_list">
 
             <div class="live_list_blue">
@@ -26,18 +33,17 @@
                                         'http://ddragon.leagueoflegends.com/cdn/' +
                                         this.lol_version +
                                         '/img/spell/' +
-                                        'SummonerFlash' +
+                                        data.spellD[index][0] +
                                         '.png'
                                     "
                                     alt="spell img"
                                     />
 
                                     <template #content>
-                                    <!-- <div style="max-width: 400px">
-                                        <p class="spell_name">{{ mainPlayer.spellD[2] }}</p>
-                                        {{ mainPlayer.spellD[1] }}
-                                    </div>  -->
-                                    <div>salut</div>
+                                        <div style="max-width: 400px">
+                                            <p class="spell_name">{{ data.spellD[index][2] }}</p>
+                                            {{ data.spellD[index][1] }}
+                                        </div>  
                                     </template>
                                 </Popper>
 
@@ -47,17 +53,17 @@
                                         'http://ddragon.leagueoflegends.com/cdn/' +
                                         this.lol_version +
                                         '/img/spell/' +
-                                        'SummonerFlash' +
+                                        data.spellF[index][0] +
                                         '.png'
                                     "
                                     alt="spell img"
                                     />
 
                                     <template #content>
-                                    <!-- <div style="max-width: 400px">
-                                        <p class="spell_name">{{ mainPlayer.spellD[2] }}</p>
-                                        {{ mainPlayer.spellD[1] }}
-                                    </div>  -->
+                                        <div style="max-width: 400px">
+                                            <p class="spell_name">{{ data.spellF[index][2] }}</p>
+                                            {{ data.spellF[index][1] }}
+                                        </div> 
                                     <div>salut</div>
                                     </template>
                                 </Popper>
@@ -95,18 +101,17 @@
                                         'http://ddragon.leagueoflegends.com/cdn/' +
                                         this.lol_version +
                                         '/img/spell/' +
-                                        'SummonerFlash' +
+                                        data.spellD[index][0] +
                                         '.png'
                                     "
                                     alt="spell img"
                                     />
 
                                     <template #content>
-                                    <!-- <div style="max-width: 400px">
-                                        <p class="spell_name">{{ mainPlayer.spellD[2] }}</p>
-                                        {{ mainPlayer.spellD[1] }}
-                                    </div>  -->
-                                    <div>salut</div>
+                                        <div style="max-width: 400px">
+                                            <p class="spell_name">{{ data.spellD[index][2] }}</p>
+                                            {{ data.spellD[index][1] }}
+                                        </div> 
                                     </template>
                                 </Popper>
 
@@ -116,18 +121,17 @@
                                         'http://ddragon.leagueoflegends.com/cdn/' +
                                         this.lol_version +
                                         '/img/spell/' +
-                                        'SummonerFlash' +
+                                        data.spellF[index][0] +
                                         '.png'
                                     "
                                     alt="spell img"
                                     />
 
                                     <template #content>
-                                    <!-- <div style="max-width: 400px">
-                                        <p class="spell_name">{{ mainPlayer.spellD[2] }}</p>
-                                        {{ mainPlayer.spellD[1] }}
-                                    </div>  -->
-                                    <div>salut</div>
+                                        <div style="max-width: 400px">
+                                            <p class="spell_name">{{ data.spellF[index][2] }}</p>
+                                            {{ data.spellF[index][1] }}
+                                        </div> 
                                     </template>
                                 </Popper>
                             </div>
@@ -164,12 +168,16 @@ export default {
         regionLive: String,
         accountIdLive: Object,
         spellsJsonLive: Object,
+        queueJsonLive: Object,
     },
     setup() {
         const data = reactive({
             live:null,
             spellD: [],
             spellF: [],
+            map: null,
+            queue:null,
+            time:null,
         });
 
         async function getLiveData() {
@@ -178,7 +186,7 @@ export default {
             ) // match history
             .then((res) => {
                 data.live = res.data;
-               // console.log(res.data);
+                console.log(res.data);
 
                 //datele despre spell urile fiecarui campion din live game, se stocheaza pt fiecare intr un vector, iar pe fiecare poz din vecotor se pun:  pe poz 0 id ul, 1 descrierea, 2 numele 
                 const spells = Object.entries(this.spellsJsonLive.data); //pt spellD
@@ -199,6 +207,51 @@ export default {
                 }
 
                 //console.log(data.spellD, data.spellF);
+
+
+                //datele despre meci (mapa si queue type)
+                
+                for (let i = 0; i < this.queueJsonLive.length; i++) {
+                    //gasirea queului
+                    if (this.queueJsonLive[i].queueId == res.data.gameQueueConfigId) {
+                        data.map = this.queueJsonLive[i].map;
+
+                        let queue = this.queueJsonLive[i].description.split(" ");  // imi taie ultimul cuvant din denumire (pt ca in json e dat ex: '5v5 Draft Pick games') si imi taie 'games'
+                        queue.pop();
+                        data.queue = queue.join(" ");
+                    }
+                }
+
+
+                //time
+                let ms = new Date() - res.data.gameStartTime;
+                let min = Math.floor((ms/1000/60) << 0);
+                let sec = Math.floor((ms/1000) % 60);
+
+                setInterval(function() {
+                    if(sec<59) {
+                        if(min<10 && sec<10) {
+                            data.time = `0${min}:0${sec++}`
+                        } else if(min<10) {
+                            data.time = `0${min}:${sec++}`
+                        } else if(sec<10) {
+                            data.time = `${min}:0${sec++}`
+                        } else {
+                            data.time = `${min}:${sec++}`
+                        }
+                    } else {
+                        if(min<10) {
+                            data.time = `0${min++}:${sec}`
+                            sec = 0;
+                        } else {
+                            data.time = `${min++}:${sec}`
+                            sec=0;
+                        }
+                    }
+                }, 1000);
+
+                
+
             });
         }
 
@@ -216,6 +269,15 @@ export default {
 
 <style lang="scss" scoped>
     .live {
+
+        &_tab {
+            display: flex;
+            padding: .5rem;
+            border-bottom: 1px solid rgba(#72757e, 0.2);
+            &>* {
+                margin-right: 1rem;
+            }
+        }
 
 
         &_list {
