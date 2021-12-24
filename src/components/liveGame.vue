@@ -141,6 +141,12 @@
                                                      </div>
                                                 </div>
                                             </div>
+                                            <div>
+                                                <img :src="data.runeStatsPerPlayer[index][0]" alt="rune_stats">
+                                                <img :src="data.runeStatsPerPlayer[index][1]" alt="rune_stats">
+                                                <img :src="data.runeStatsPerPlayer[index][2]" alt="rune_stats">
+                                            </div>
+
                                         </div>
 
  
@@ -300,6 +306,12 @@
                                                      </div>
                                                 </div>
                                             </div>
+
+                                            <div>
+                                                <img :src="data.runeStatsPerPlayer[index][0]" alt="rune_stats">
+                                                <img :src="data.runeStatsPerPlayer[index][1]" alt="rune_stats">
+                                                <img :src="data.runeStatsPerPlayer[index][2]" alt="rune_stats">
+                                            </div>
                                         </div>
 
  
@@ -367,6 +379,16 @@ export default {
             ranksFlex:[],
             runes: [],
             runesPerPlayer:[],
+            runeStats: [],
+            runeStatsPerPlayer:[],
+            runeStatsJson: [
+                {id: 5002, link: 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/statmods/statmodsarmoricon.png'}, //armura
+                {id: 5003, link: 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/statmods/statmodsmagicresicon.png'}, // magic resist
+                {id: 5005, link: 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/statmods/statmodsattackspeedicon.png'}, //atck speed
+                {id: 5007, link: 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/statmods/statmodscdrscalingicon.png'}, //CR
+                {id: 5008, link: 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/statmods/statmodsadaptiveforceicon.png'}, //damage
+                {id: 5001, link: 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/statmods/statmodshealthscalingicon.png'}, //heal
+            ]
         });
 
         async function getLiveData() {
@@ -509,6 +531,25 @@ export default {
                 }
                 console.log(data.runesPerPlayer);
 
+
+                //rune stats (atck speed, dmg, armura)
+
+                for(let i = 0; i < res.data.participants.length; i++) {
+                    for(let j = 6; j< res.data.participants[i].perks.perkIds.length; j++) {
+                        for(let k = 0; k < data.runeStatsJson.length; k++) {
+                            if(data.runeStatsJson[k].id === res.data.participants[i].perks.perkIds[j]) {
+                                data.runeStats.push(data.runeStatsJson[k].link);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                for(let i = 0; i < data.runeStats.length; i+=3) {
+                    data.runeStatsPerPlayer.push([data.runeStats[i],data.runeStats[i+1],data.runeStats[i+2]]);
+                }
+                console.log(data.runeStatsPerPlayer);
+
             });
 
 
@@ -595,6 +636,7 @@ export default {
             &_rune {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
+                gap: 1.2rem;
                 
                 &_box {
                     display: flex;
@@ -606,7 +648,6 @@ export default {
                         flex-direction: column;
                         text-align: left;
                     }
-                    margin-bottom: 1rem;
                 }
 
                 &>*:nth-child(1) {
@@ -632,6 +673,10 @@ export default {
                 &>*:nth-child(6) {
                     grid-column: 2/3;
                     grid-row: 2/3;
+                }
+                &>*:nth-child(7) {
+                    grid-column: 1/2;
+                    grid-row: 5/6;
                 }
             }
 
