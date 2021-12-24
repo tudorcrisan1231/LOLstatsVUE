@@ -120,6 +120,33 @@
                                 </div> 
                             </div>
 
+                            <Popper placement="bottom" arrow>
+                                    <button class="live_list_runeBtn">Runes</button>
+
+                                    <template #content>
+                                        <div class="live_list_rune" style="max-width:550px">
+                                            <div style="" v-for="(j,poz) in data.runesPerPlayer[index]" :key="j">
+                                                <div class="live_list_rune_box">
+                                                    <img
+                                                        :src="
+                                                            'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/' +
+                                                            data.runesPerPlayer[index][poz].icon
+                                                        "
+                                                        alt="runes img"
+                                                        class="match_details_spells_runePrimary"
+                                                    />
+                                                    <div class="live_list_rune_box_name">
+                                                        <p style="font-weight:bold">{{data.runesPerPlayer[index][poz].name}}</p>
+                                                        <p v-html="data.runesPerPlayer[index][poz].desc"></p>
+                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+ 
+                                    </template>
+                            </Popper>
+
                             <div class="live_list_bans">
                                 <div v-if="data.live.bannedChampions[index].championId=='-1'">
                                     <img src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/gp_ui_placeholder.png" alt="no ban"/>
@@ -252,6 +279,32 @@
                                 </div> 
                             </div>
 
+                            <Popper placement="bottom" arrow>
+                                    <button class="live_list_runeBtn">Runes</button>
+
+                                    <template #content>
+                                        <div class="live_list_rune" style="max-width:550px">
+                                            <div style="" v-for="(j,poz) in data.runesPerPlayer[index]" :key="j">
+                                                <div class="live_list_rune_box">
+                                                    <img
+                                                        :src="
+                                                            'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/' +
+                                                            data.runesPerPlayer[index][poz].icon
+                                                        "
+                                                        alt="runes img"
+                                                        class="match_details_spells_runePrimary"
+                                                    />
+                                                    <div class="live_list_rune_box_name">
+                                                        <p style="font-weight:bold">{{data.runesPerPlayer[index][poz].name}}</p>
+                                                        <p v-html="data.runesPerPlayer[index][poz].desc"></p>
+                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+ 
+                                    </template>
+                            </Popper>
 
                             <div class="live_list_bans">
                                 <div v-if="data.live.bannedChampions[index].championId=='-1'">
@@ -299,6 +352,7 @@ export default {
         accountIdLive: Object,
         spellsJsonLive: Object,
         queueJsonLive: Object,
+        runesJsonLive: Object,
     },
     setup() {
         const data = reactive({
@@ -311,6 +365,8 @@ export default {
             ranks:[],
             ranksSolo:[],
             ranksFlex:[],
+            runes: [],
+            runesPerPlayer:[],
         });
 
         async function getLiveData() {
@@ -428,6 +484,31 @@ export default {
                 }
                 getRanks(this.regionLive);
 
+
+
+                //runes for live game
+
+                for(let i = 0; i < res.data.participants.length;i++) {
+                    for(let j = 0; j< res.data.participants[i].perks.perkIds.length; j++) {
+                        for(let k = 0; k< this.runesJsonLive.length; k++) {
+                            for(let h = 0; h< this.runesJsonLive[k].slots.length; h++) {
+                                for(let g = 0; g < this.runesJsonLive[k].slots[h].runes.length; g++) {
+                                    if(res.data.participants[i].perks.perkIds[j] == this.runesJsonLive[k].slots[h].runes[g].id) {
+                                        data.runes.push({key:this.runesJsonLive[k].slots[h].runes[g].key, icon:this.runesJsonLive[k].slots[h].runes[g].icon.toLowerCase(), name:this.runesJsonLive[k].slots[h].runes[g].name, desc:this.runesJsonLive[k].slots[h].runes[g].shortDesc});
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    
+                }
+
+                for(let i = 0; i < data.runes.length; i+=6) {
+                    data.runesPerPlayer.push([data.runes[i],data.runes[i+1],data.runes[i+2],data.runes[i+3],data.runes[i+4],data.runes[i+5]]);
+                }
+                console.log(data.runesPerPlayer);
+
             });
 
 
@@ -482,6 +563,7 @@ export default {
                     height: 4rem;
                     margin-right: .5rem;
                     margin-left: .2rem;
+                    border-radius: .5rem;
                 }
 
                 &_name {
@@ -497,6 +579,59 @@ export default {
                 img {
                     width: 1.5rem;
                     height: 1.5rem;
+                }
+            }
+
+            &_runeBtn {
+                background-color: var(--color-win);
+                border: none;
+                outline: none;
+                padding: .5rem;
+                font-family: inherit;
+                border-radius: .2rem;
+                cursor: pointer;
+            }
+
+            &_rune {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                
+                &_box {
+                    display: flex;
+                    align-items: flex-start;
+
+                    &_name {
+                        display: flex;
+                        align-items: flex-start;
+                        flex-direction: column;
+                        text-align: left;
+                    }
+                    margin-bottom: 1rem;
+                }
+
+                &>*:nth-child(1) {
+                    grid-column: 1/2;
+                    grid-row: 1/2;
+                }
+                &>*:nth-child(2) {
+                    grid-column: 1/2;
+                    grid-row: 2/3;
+                }
+                &>*:nth-child(3) {
+                    grid-column: 1/2;
+                    grid-row: 3/4;
+                }
+                &>*:nth-child(4) {
+                    grid-column: 1/2;
+                    grid-row: 4/5;
+                }
+                &>*:nth-child(5) {
+                    grid-column: 2/3;
+                    grid-row: 1/2;
+                }
+                &>*:nth-child(6) {
+                    grid-column: 2/3;
+                    grid-row: 2/3;
                 }
             }
 

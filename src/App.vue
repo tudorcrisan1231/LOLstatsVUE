@@ -21,6 +21,7 @@
   --color-lose07: rgba(240, 128, 128, 0.7);
   --color-lose01: rgba(240, 128, 128, 0.1);
 
+  --color-yellow: rgb(207, 179, 60);
 }
 html {
   font-size: 62.5%;

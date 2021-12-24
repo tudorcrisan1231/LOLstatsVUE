@@ -101,7 +101,7 @@
       }
     }
     .spell_name {
-      color: rgb(207, 179, 60);
+      color: var(--color-yellow);
       font-weight: bold;
     }
     &_score {
