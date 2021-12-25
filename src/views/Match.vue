@@ -225,6 +225,10 @@ export default {
   }
   @media screen and (max-width: 1350px) {
     margin-left: 2%;
+    margin-right: 4%;
+  }
+  @media screen and (max-width: 1000px) {
+    margin-left: 2%;
     margin-right: 2%;
   }
 
