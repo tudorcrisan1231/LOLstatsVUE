@@ -76,7 +76,7 @@
                             </a>
 
                             <div v-if="data.ranksFlex && data.ranksSolo" class="live_list_rank_container">
-                                <div v-if="'5v5 Ranked Solo'">
+                                <div v-if="data.queue=='5v5 Ranked Solo'">
                                     <!-- {{data.ranks[index][0].tier}} -->
                                     <div v-if="data.ranksSolo[index]=='Unranked'" class="live_list_rank">
                                         <img src="../assets/unranked.png" alt="unranked" />
@@ -247,7 +247,7 @@
                             </a>
 
                             <div v-if="data.ranksFlex && data.ranksSolo" class="live_list_rank_container">
-                                <div v-if="'5v5 Ranked Solo'">
+                                <div v-if="data.queue=='5v5 Ranked Solo'">
                                     <!-- {{data.ranks[index][0].tier}} -->
                                     <div v-if="data.ranksSolo[index]=='Unranked'" class="live_list_rank">
                                         <img src="../assets/unranked.png" alt="unranked" />
