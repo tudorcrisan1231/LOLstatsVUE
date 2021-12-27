@@ -272,9 +272,8 @@
 
         <div
           class="match_btn"
-          :class="
-            match.info.participants[mainPlayer.poz].win ? 'win_btn' : 'lose_btn'
-          "
+          :class="match.info.participants[mainPlayer.poz].win ? 'win_btn' : 'lose_btn'"
+          @click="mainPlayer.toggleAdvancedDetails = !mainPlayer.toggleAdvancedDetails"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -292,6 +291,10 @@
             />
           </svg>
         </div>
+
+        <div v-if="mainPlayer.toggleAdvancedDetails">
+          <match_history_advancedDetails_nav></match_history_advancedDetails_nav>
+        </div>
       </div>
     </div>
   </div>
@@ -300,11 +303,13 @@
 <script>
 import { reactive } from "vue";
 import Popper from "vue3-popper";
+import match_history_advancedDetails_nav from "../components/match_history_advancedDetails_nav.vue";
 
 export default {
   name: "matchData",
   components: {
     Popper,
+    match_history_advancedDetails_nav,
   },
   props: {
     match: Object, //datele despre meci (un singur meci)
@@ -326,6 +331,7 @@ export default {
       spellF: [],
       runePrimary: [], // pe pozitia 0 am runa in sine, pe poz 1 am descrierea, pe poz 2 am numele
       runeSecondary: [],
+      toggleAdvancedDetails: false,
     });
 
     // const items = reactive({
