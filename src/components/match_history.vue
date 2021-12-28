@@ -292,8 +292,8 @@
           </svg>
         </div>
 
-        <div v-if="mainPlayer.toggleAdvancedDetails">
-          <match_history_advancedDetails_nav></match_history_advancedDetails_nav>
+        <div v-if="mainPlayer.toggleAdvancedDetails" style="grid-column:1/-1;">
+          <match_history_advancedDetails_nav :matchInfo="this.match"></match_history_advancedDetails_nav>
         </div>
       </div>
     </div>
