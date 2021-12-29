@@ -118,6 +118,10 @@
                                         <p>Unranked</p>
                                     </div>
                                     <div v-else class="live_list_rank">
+                                        <img
+                                            :src="require('../assets/' + data.ranksSolo[index].tier + '.png')"
+                                            alt=""
+                                        />
                                        <p>{{data.ranksSolo[index].tier}}</p>
                                        <p>{{data.ranksSolo[index].rank}}</p>
                                         <p style="color:var(--color-yellow)">{{data.ranksSolo[index].leaguePoints}}LP</p>
@@ -289,6 +293,10 @@
                                         <p>Unranked</p>
                                     </div>
                                     <div v-else class="live_list_rank">
+                                        <img
+                                            :src="require('../assets/' + data.ranksSolo[index].tier + '.png')"
+                                            alt=""
+                                        />
                                        <p>{{data.ranksSolo[index].tier}}</p>
                                        <p>{{data.ranksSolo[index].rank}}</p>
                                         <p style="color:var(--color-yellow)">{{data.ranksSolo[index].leaguePoints}}LP</p>
