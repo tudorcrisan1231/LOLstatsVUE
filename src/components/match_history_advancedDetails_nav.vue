@@ -8,7 +8,7 @@
       </div>
 
       <div v-if="toggle.overview">
-        <overview :matchData="this.matchInfo"></overview>
+        <overview :matchData="this.matchInfo" :itemsData="this.itemsInfo" :spellsData="this.spellsInfo" :runesData="this.runesInfo"></overview>
       </div>
 
       <div v-if="toggle.builds">
@@ -45,7 +45,10 @@ export default {
     breakdown: breakdown,
   },
   props: {
-    matchInfo: Object,
+    matchInfo: Object, //match details
+    itemsInfo: Object, //json with all items
+    spellsInfo: Object, //json cu speels data
+    runesInfo: Object, //json cu runes data
   },
   setup() {
     const toggle = reactive({

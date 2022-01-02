@@ -293,7 +293,7 @@
         </div>
 
         <div v-if="mainPlayer.toggleAdvancedDetails" style="grid-column:1/-1;">
-          <match_history_advancedDetails_nav :matchInfo="this.match"></match_history_advancedDetails_nav>
+          <match_history_advancedDetails_nav :matchInfo="this.match" :itemsInfo="this.itemsJson" :spellsInfo="this.spellsJson" :runesInfo="this.runesJson"></match_history_advancedDetails_nav>
         </div>
       </div>
     </div>
@@ -415,11 +415,6 @@ export default {
         }
       }
 
-      //gasirea itemelor (main player)
-
-      // for(let i = 0; i< this.itemsJson.data.length; i++) {
-      // if()
-      // }
     }
 
     function getTime() {
