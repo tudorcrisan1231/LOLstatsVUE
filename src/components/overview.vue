@@ -203,7 +203,7 @@
                     </div>
 
                     <a :href="'/' +this.regionData + '/' + this.matchData.info.participants[index].summonerName" target="_blank" class="team_player_name">
-                    {{this.matchData.info.participants[index].summonerName}}
+                     <p>{{this.matchData.info.participants[index].summonerName}}</p>
                     </a>
 
 
@@ -486,7 +486,7 @@
                     </div>
 
                     <a :href="'/' +this.regionData + '/' + this.matchData.info.participants[index].summonerName" target="_blank" class="team_player_name">
-                    {{this.matchData.info.participants[index].summonerName}}
+                        <p>{{this.matchData.info.participants[index].summonerName}}</p>
                     </a>
 
 
@@ -755,6 +755,9 @@ export default {
     grid-template-columns: 1fr;
     gap: 1rem;
     width: 100%;
+    // white-space: nowrap;
+        // overflow-x: scroll;
+        // overflow-y: hidden;
 
     &_overview {
         display: flex;
@@ -829,6 +832,8 @@ export default {
     &_blue,&_red {
         display: flex;
         flex-direction: column;
+        width: 100% !important;
+
     }
 
     &_blue {
@@ -837,12 +842,13 @@ export default {
     }
 
     &_player {
+        width: 100% !important;
         display: grid;
-        grid-template-columns: min-content min-content min-content 10rem 1fr max-content max-content min-content;
+        grid-template-columns: min-content min-content min-content 12% 1fr 1fr 1fr min-content;
         align-items: center;
         justify-items: center;
         text-align: left;
-        gap: 2rem;
+        gap: 1rem;
         margin-bottom: 1rem;
         width: 100%;
 
@@ -855,6 +861,12 @@ export default {
             text-decoration: none;
             color: inherit;
             cursor: pointer;
+   
+            p {
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
         }
 
         &_level {
@@ -879,6 +891,7 @@ export default {
             display: flex;
             flex-direction: column;
             align-items: center;
+            white-space: nowrap;
 
             &_kp {
                 display: flex;
@@ -899,10 +912,16 @@ export default {
 
 
         &_items {
-            display: flex;
-            &>*:not(:last-child) {
-                margin-right: .3rem;
-            }
+           display: grid;
+        //    grid-template-columns: repeat(4,1fr);
+            grid-template-columns: repeat(7,1fr);
+           gap: .1rem;
+           row-gap: 0;
+
+           img {
+               width: 2.7rem !important; 
+               height: 2.7rem !important;
+           }
         }
 
         &_spells {
@@ -942,8 +961,9 @@ export default {
 
         &_runeBtn {
             background-color: transparent;
-            border: 1px solid black;
+            border: 1px solid white;
             font-family: inherit;
+            color: white;
             padding: .4rem;
             cursor: pointer;
         }
