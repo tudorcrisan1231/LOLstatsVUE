@@ -125,7 +125,9 @@
                     </Popper>
                 </div>
 
-                <p>{{this.matchData.info.participants[index].summonerName}}</p>
+                <a :href="'/' +this.regionData + '/' + this.matchData.info.participants[index].summonerName" target="_blank" class="team_player_name">
+                   {{this.matchData.info.participants[index].summonerName}}
+                </a>
 
 
                 <div class="team_player_score">
@@ -330,7 +332,9 @@
                     </Popper>
                 </div>
 
-                <p>{{this.matchData.info.participants[index].summonerName}}</p>
+                <a :href="'/' +this.regionData + '/' + this.matchData.info.participants[index].summonerName" target="_blank" class="team_player_name">
+                   {{this.matchData.info.participants[index].summonerName}}
+                </a>
 
 
                 <div class="team_player_score">
@@ -410,6 +414,22 @@
             </div>
         </div>
       </div>
+
+      <div class="team_bans">
+        <div>
+            <div v-for="(i,index) in this.matchData.info.teams[0].bans" :key="i">
+                <img style="filter: grayscale(100%);" :src="'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' + this.matchData.info.teams[0].bans[index].championId + '.png'" alt="champ img"/>
+            </div>
+        </div>
+
+        <p>: Bans :</p>
+
+        <div>
+            <div v-for="(i,index) in this.matchData.info.teams[1].bans" :key="i">
+                <img style="filter: grayscale(100%);" :src="'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' + this.matchData.info.teams[1].bans[index].championId + '.png'" alt="champ img"/>
+            </div>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -426,6 +446,7 @@ export default {
         itemsData: Object,
         spellsData: Object,
         runesData: Object,
+        regionData: String,
     },
     setup() {
         const teamBlue = reactive({
@@ -558,6 +579,21 @@ export default {
     gap: 1rem;
     width: 100%;
 
+    &_bans {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid rgba(0,0,0, .2);
+        padding-top: 1rem;
+
+        div {
+            display: flex;
+            &>*:not(:last-child) {
+                margin-right: .5rem;
+            }
+        }
+    }
+
 
     img {
         width: 3rem;
@@ -574,9 +610,9 @@ export default {
 
     &_player {
         display: grid;
-        grid-template-columns: min-content min-content min-content 1fr max-content max-content max-content min-content;
+        grid-template-columns: min-content min-content min-content 10rem 1fr max-content max-content min-content;
         align-items: center;
-        justify-items: flex-start;
+        justify-items: center;
         text-align: left;
         gap: 2rem;
         margin-bottom: 1rem;
@@ -585,6 +621,13 @@ export default {
         // &>div {
         //     display: flex !important;
         // }
+
+        &_name {
+            justify-self: flex-start;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
 
         &_level {
             position: relative;
