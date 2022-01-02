@@ -1,10 +1,8 @@
 <template>
-  <div class="match">
-    <div v-if="mainPlayer.poz != null" style="width: 100%">
-      <div
-        :class="match.info.participants[mainPlayer.poz].win ? 'win' : 'lose'"
-        class="match_details"
-      >
+  <div class="match" style="display:flex; flex-direction:column;">
+    <div v-if="mainPlayer.poz != null" style="width: 100%" :class="match.info.participants[mainPlayer.poz].win ? 'win' : 'lose'">
+      <div class="match_details">
+
         <div class="match_details_time">
           <p>{{ mainPlayer.queue }}</p>
           <p v-if="match.info.participants[mainPlayer.poz].win" style="color: var(--color-win)">Win</p>
@@ -292,11 +290,15 @@
           </svg>
         </div>
 
-        <div v-if="mainPlayer.toggleAdvancedDetails" style="grid-column:1/-1;">
-          <match_history_advancedDetails_nav :matchInfo="this.match" :itemsInfo="this.itemsJson" :spellsInfo="this.spellsJson" :runesInfo="this.runesJson" :regionInfo="this.region"></match_history_advancedDetails_nav>
-        </div>
+
       </div>
+
+      <div v-if="mainPlayer.toggleAdvancedDetails">
+        <match_history_advancedDetails_nav :matchInfo="this.match" :itemsInfo="this.itemsJson" :spellsInfo="this.spellsJson" :runesInfo="this.runesJson" :regionInfo="this.region"></match_history_advancedDetails_nav>
+      </div>
+
     </div>
+
   </div>
 </template>
 
