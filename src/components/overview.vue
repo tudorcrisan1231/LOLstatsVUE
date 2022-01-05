@@ -844,7 +844,7 @@ export default {
     &_player {
         width: 100% !important;
         display: grid;
-        grid-template-columns: min-content min-content min-content 12% 1fr 1fr 1fr min-content;
+        grid-template-columns: min-content min-content min-content 13% 1fr 1fr 1fr min-content;
         align-items: center;
         justify-items: center;
         text-align: left;
@@ -859,9 +859,11 @@ export default {
         &_name {
             justify-self: flex-start;
             text-decoration: none;
-            color: inherit;
+            color: inherit;                                                               
             cursor: pointer;
-   
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
             p {
                 white-space: nowrap !important;
                 overflow: hidden !important;
@@ -885,6 +887,10 @@ export default {
                 justify-content: center;
                 z-index: 5;
             }
+        }
+
+        &_dmg {
+            white-space: nowrap;
         }
 
         &_score {
@@ -966,6 +972,10 @@ export default {
             color: white;
             padding: .4rem;
             cursor: pointer;
+
+            @media screen and (max-width: 750px) {
+                font-size: 1.2rem;
+            }
         }
     }
 }
