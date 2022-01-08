@@ -203,6 +203,19 @@
   height: auto;
   padding: 0.5rem;
 }
+.remake {
+  background-image: linear-gradient(
+    to left,
+    var(--color-remake07),
+    var(--color-remake01)
+  );
+  border-left: 1px solid var(--color-remake);
+  height: auto;
+  padding: 0.5rem;
+}
+.remake_btn {
+  background-color: var(--color-remake07);
+}
 
 .win_btn {
   background-color: var(--color-win07);

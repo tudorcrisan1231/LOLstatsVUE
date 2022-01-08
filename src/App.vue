@@ -14,12 +14,16 @@
   // --color-win: #20B2AA;
   --color-win: rgb(32,178,170);
   --color-lose: rgb(240, 128, 128);
+  --color-remake: rgb(192,192,192);
 
   --color-win07: rgba(32, 178, 170, 0.7);
   --color-win01: rgba(32, 178, 170, 0.1);
 
   --color-lose07: rgba(240, 128, 128, 0.7);
   --color-lose01: rgba(240, 128, 128, 0.1);
+
+  --color-remake07: rgba(192,192,192,.7);
+  --color-remake01: rgba(192,192,192,.1);
 
   --color-yellow: rgb(207, 179, 60);
 }

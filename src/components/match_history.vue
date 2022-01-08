@@ -1,11 +1,13 @@
 <template>
   <div class="match" style="display:flex; flex-direction:column;">
-    <div v-if="mainPlayer.poz != null" style="width: 100%" :class="match.info.participants[mainPlayer.poz].win ? 'win' : 'lose'">
+    <div v-if="mainPlayer.poz != null" style="width: 100%" :class="match.info.gameDuration<250 ? 'remake' : (match.info.participants[mainPlayer.poz].win ? 'win' : 'lose')">
       <div class="match_details">
 
         <div class="match_details_time">
           <p>{{ mainPlayer.queue }}</p>
-          <p v-if="match.info.participants[mainPlayer.poz].win" style="color: var(--color-win)">Win</p>
+
+          <p v-if="match.info.gameDuration<250" style="color: var(--color-remake)">Remake</p>
+          <p v-else-if="match.info.participants[mainPlayer.poz].win" style="color: var(--color-win)">Win</p>
           <p v-else style="color: var(--color-lose)">Defeat</p>
           <p v-if="mainPlayer.gameDuration">{{ mainPlayer.gameDuration }}</p>
           <p>{{ mainPlayer.gameTimeAgo }} ago</p>
@@ -270,7 +272,7 @@
 
         <div
           class="match_btn"
-          :class="match.info.participants[mainPlayer.poz].win ? 'win_btn' : 'lose_btn'"
+          :class="match.info.gameDuration<250 ? 'remake_btn' : (match.info.participants[mainPlayer.poz].win ? 'win_btn' : 'lose_btn')"
           @click="mainPlayer.toggleAdvancedDetails = !mainPlayer.toggleAdvancedDetails"
         >
           <svg

@@ -221,7 +221,7 @@
                     </div>
 
                     <div class="team_player_dmg">
-                        <p>{{((this.matchData.info.participants[index].totalDamageDealtToChampions)/1000).toFixed(3)}} DMG</p>
+                        <p><span>{{((this.matchData.info.participants[index].totalDamageDealtToChampions)/1000).toFixed(3)}}</span> <span>DMG</span></p>
                     </div>
 
                     <div class="team_player_items">
@@ -504,7 +504,7 @@
                     </div>
 
                     <div class="team_player_dmg">
-                        <p>{{((this.matchData.info.participants[index].totalDamageDealtToChampions)/1000).toFixed(3)}} DMG</p>
+                        <p><span>{{((this.matchData.info.participants[index].totalDamageDealtToChampions)/1000).toFixed(3)}}</span> <span>DMG</span></p>
                     </div>
 
                     <div class="team_player_items">
@@ -755,6 +755,9 @@ export default {
     grid-template-columns: 1fr;
     gap: 1rem;
     width: 100%;
+    @media screen and (max-width: 500px) {
+        font-size: 1rem;
+    }
     // white-space: nowrap;
         // overflow-x: scroll;
         // overflow-y: hidden;
@@ -764,10 +767,19 @@ export default {
         align-items: center;
         justify-content: space-between;
         font-weight: bold;
+        @media screen and (max-width: 500px) {
+            font-size: 1rem;
+        }
         &_result {
             display: flex;
             align-items: center;
             font-size: 1.4rem;
+            @media screen and (max-width: 500px) {
+                font-size: 1rem;
+            }
+            @media screen and (max-width: 400px) {
+                flex-direction: column;
+            }
         }
 
         &_obj {
@@ -791,6 +803,11 @@ export default {
         img {
             width: 2rem !important;
             height: 2rem !important;
+
+            @media screen and (max-width: 500px) {
+                width: 1.5rem !important;
+                height: 1.5rem !important;
+            }
         }
 
         &_gold {
@@ -816,6 +833,13 @@ export default {
             display: flex;
             &>*:not(:last-child) {
                 margin-right: .5rem;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            img {
+                width: 2.5rem !important;
+                height: 2.5rem !important;
             }
         }
     }
@@ -844,7 +868,7 @@ export default {
     &_player {
         width: 100% !important;
         display: grid;
-        grid-template-columns: min-content min-content min-content 13% 1fr 1fr 1fr min-content;
+        grid-template-columns: min-content min-content min-content minmax(13%, max-content) 1fr 1fr 1fr min-content;
         align-items: center;
         justify-items: center;
         text-align: left;
@@ -852,9 +876,25 @@ export default {
         margin-bottom: 1rem;
         width: 100%;
 
+        @media screen and (max-width: 600px) {
+            grid-template-columns: min-content min-content min-content minmax(13%, max-content) 1fr 1fr 1fr;
+            row-gap: .5rem;
+        }
+        @media screen and (max-width: 500px) {
+            grid-template-columns: min-content min-content min-content 18% 1fr 1fr 1fr;
+        }
+        @media screen and (max-width: 400px) {
+            grid-template-columns: min-content min-content min-content 18% 1fr 1fr 1fr;
+        }
+
         // &>div {
         //     display: flex !important;
         // }
+        transition: all .2s;
+
+        &:hover {
+            background-color: rgba(0,0,0,.1);
+        }
 
         &_name {
             justify-self: flex-start;
@@ -891,6 +931,15 @@ export default {
 
         &_dmg {
             white-space: nowrap;
+
+            p{
+                @media screen and (max-width: 400px) {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
         }
 
         &_score {
@@ -927,6 +976,15 @@ export default {
            img {
                width: 2.7rem !important; 
                height: 2.7rem !important;
+           }
+
+            @media screen and (max-width: 650px) {
+                grid-template-columns: repeat(4,1fr);
+            }
+            @media screen and (max-width: 600px) {
+               grid-template-columns: repeat(7,1fr);
+               grid-column: 1/-1;
+               justify-self: flex-start;
            }
         }
 
@@ -976,6 +1034,7 @@ export default {
             @media screen and (max-width: 750px) {
                 font-size: 1.2rem;
             }
+ 
         }
     }
 }
