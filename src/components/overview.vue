@@ -202,9 +202,12 @@
                         </Popper>
                     </div>
 
-                    <a :href="'/' +this.regionData + '/' + this.matchData.info.participants[index].summonerName" target="_blank" class="team_player_name">
-                     <p>{{this.matchData.info.participants[index].summonerName}}</p>
-                    </a>
+                    <div class="team_player_name">
+                        <a :href="'/' +this.regionData + '/' + this.matchData.info.participants[index].summonerName" target="_blank">
+                            <p>{{this.matchData.info.participants[index].summonerName}}</p>
+                        </a>
+                    </div>
+
 
 
                     <div class="team_player_score">
@@ -485,9 +488,11 @@
                         </Popper>
                     </div>
 
-                    <a :href="'/' +this.regionData + '/' + this.matchData.info.participants[index].summonerName" target="_blank" class="team_player_name">
+                    <div class="team_player_name">
+                        <a :href="'/' +this.regionData + '/' + this.matchData.info.participants[index].summonerName" target="_blank">
                         <p>{{this.matchData.info.participants[index].summonerName}}</p>
-                    </a>
+                        </a>
+                    </div>
 
 
                     <div class="team_player_score">
@@ -826,7 +831,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-top: 1px solid rgba(0,0,0, .2);
+        border-top: 4px solid rgba(0,0,0, 0.2);
         padding-top: 1rem;
 
         div {
@@ -868,7 +873,7 @@ export default {
     &_player {
         width: 100% !important;
         display: grid;
-        grid-template-columns: min-content min-content min-content minmax(13%, max-content) 1fr 1fr 1fr min-content;
+        grid-template-columns: min-content min-content min-content 13% min-content 1fr 1fr min-content;
         align-items: center;
         justify-items: center;
         text-align: left;
@@ -877,7 +882,7 @@ export default {
         width: 100%;
 
         @media screen and (max-width: 600px) {
-            grid-template-columns: min-content min-content min-content minmax(13%, max-content) 1fr 1fr 1fr;
+            grid-template-columns: min-content min-content min-content 13% 1fr 1fr 1fr;
             row-gap: .5rem;
         }
         @media screen and (max-width: 500px) {
@@ -891,6 +896,7 @@ export default {
         //     display: flex !important;
         // }
         transition: all .2s;
+        border-bottom: 1px solid rgba(0,0,0,.1);
 
         &:hover {
             background-color: rgba(0,0,0,.1);
@@ -899,15 +905,19 @@ export default {
         &_name {
             justify-self: flex-start;
             text-decoration: none;
-            color: inherit;                                                               
             cursor: pointer;
-            white-space: nowrap !important;
-            overflow: hidden !important;
-            text-overflow: ellipsis !important;
-            p {
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
+            width: 100%;
+            a {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-decoration: none;
+                color: inherit;    
+                p{
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }                                                           
             }
         }
 
@@ -1031,7 +1041,7 @@ export default {
             padding: .4rem;
             cursor: pointer;
 
-            @media screen and (max-width: 750px) {
+            @media screen and (max-width: 800px) {
                 font-size: 1.2rem;
             }
  
