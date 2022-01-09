@@ -20,7 +20,7 @@
       </div>
 
       <div v-if="toggle.breakdown">
-        <breakdown></breakdown>
+        <breakdown :matchData="this.matchInfo"></breakdown>
       </div>
 
       <!-- <p style="width:200px;">{{this.matchInfo}}</p>  -->
