@@ -16,7 +16,7 @@
       </div>
 
       <div v-if="toggle.advanced">
-        <advanced></advanced>
+        <advanced :matchData="this.matchInfo"></advanced>
       </div>
 
       <div v-if="toggle.breakdown">

@@ -878,7 +878,8 @@ export default {
         justify-items: center;
         text-align: left;
         gap: 1rem;
-        margin-bottom: 1rem;
+        padding-bottom: .5rem;
+        padding-top: .5rem;
         width: 100%;
 
         @media screen and (max-width: 600px) {
