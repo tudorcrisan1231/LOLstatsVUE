@@ -109,6 +109,23 @@ app.get("/spectator-v4/:region/:summonerID", async (request, response) => {
 });
 
 
+//MATCH-V5 TIMELINE
+app.get("/timeline/:region/:gameID", async (request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+
+  const gameID = request.params.gameID;
+  const region = request.params.region;
+  //console.log(gameID);
+
+  axios(
+    `https://${region}.api.riotgames.com/lol/match/v5/matches/${gameID}/timeline?api_key=${api_key}`
+  ).then((res) => {
+    response.send(res.data);
+    //console.log(res.data);
+  });
+});
+
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

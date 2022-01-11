@@ -237,7 +237,19 @@
                                 />
 
                                 <template #content>
-                                    <p style="max-width: 400px">No item</p>
+                                    <p style="max-width: 400px">No item {{parseInt(this.matchData.info.participants[index][j])}}</p>
+                                </template>
+                                </Popper>
+                            </div>
+                            <div v-else-if="(this.matchData.info.participants[index][j]>=7000 && this.matchData.info.participants[index][j]<=7025)">
+                                <Popper placement="top" arrow hover>
+                                <img
+                                    src="https://raw.communitydragon.org/latest/game/assets/items/itemmodifiers/bordertreatmentornn.png"
+                                    alt="placeholder ornn item"
+                                />
+
+                                <template #content>
+                                    <p style="max-width: 400px">Ornn upgraded item</p>
                                 </template>
                                 </Popper>
                             </div>
@@ -271,7 +283,7 @@
                                         "
                                     ></p>
                                     <p class="spell_name">
-                                        Cost:
+                                        Cost: 
                                         {{
                                         this.itemsData.data[
                                             this.matchData.info.participants[index][j]
@@ -523,6 +535,18 @@
 
                                 <template #content>
                                     <p style="max-width: 400px">No item</p>
+                                </template>
+                                </Popper>
+                            </div>
+                            <div v-else-if="(this.matchData.info.participants[index][j]>=7000 && this.matchData.info.participants[index][j]<=7025)">
+                                <Popper placement="top" arrow hover>
+                                <img
+                                    src="https://raw.communitydragon.org/latest/game/assets/items/itemmodifiers/bordertreatmentornn.png"
+                                    alt="placeholder ornn item"
+                                />
+
+                                <template #content>
+                                    <p style="max-width: 400px">Ornn upgraded item</p>
                                 </template>
                                 </Popper>
                             </div>

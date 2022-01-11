@@ -171,6 +171,20 @@
                   </template>
                 </Popper>
               </div>
+
+              <div v-else-if="(match.info.participants[mainPlayer.poz][i]>=7000 && match.info.participants[mainPlayer.poz][i]<=7025)">
+                <Popper placement="top" arrow hover>
+                  <img
+                    src="https://raw.communitydragon.org/latest/game/assets/items/itemmodifiers/bordertreatmentornn.png"
+                    alt="placeholder ornn item"
+                  />
+
+                  <template #content>
+                    <p style="max-width: 400px">Ornn upgraded item</p>
+                  </template>
+                </Popper>
+              </div>
+
               <div v-else>
                 <Popper placement="top" arrow hover>
                   <img
