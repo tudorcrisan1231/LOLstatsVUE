@@ -310,7 +310,7 @@
       </div>
 
       <div v-if="mainPlayer.toggleAdvancedDetails">
-        <match_history_advancedDetails_nav :matchInfo="this.match" :itemsInfo="this.itemsJson" :spellsInfo="this.spellsJson" :runesInfo="this.runesJson" :regionInfo="this.region"></match_history_advancedDetails_nav>
+        <match_history_advancedDetails_nav :matchInfo="this.match" :itemsInfo="this.itemsJson" :spellsInfo="this.spellsJson" :runesInfo="this.runesJson" :regionInfo="this.region" :continentInfo="this.continent" :puuid="this.summonersPuuid"></match_history_advancedDetails_nav>
       </div>
 
     </div>
@@ -333,6 +333,7 @@ export default {
     match: Object, //datele despre meci (un singur meci)
     summonersPuuid: String, //puuid ul player ului cautat
     region: String, //regiunea
+    continent: String, //continent
     queueJson: Array, // un json cu toate queurile
     spellsJson: Object, //un json cu toate spell urile
     runesJson: Object, // un json cu toate runele

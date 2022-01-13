@@ -12,7 +12,7 @@
       </div>
 
       <div v-if="toggle.builds">
-        <builds></builds>
+        <builds :gameID="this.matchInfo.metadata.matchId" :continent="this.continentInfo" :summonersPuuid="this.puuid" :itemsJson="this.itemsInfo"></builds>
       </div>
 
       <div v-if="toggle.advanced">
@@ -50,6 +50,8 @@ export default {
     spellsInfo: Object, //json cu speels data
     runesInfo: Object, //json cu runes data
     regionInfo: String, //region
+    continentInfo: String, //continent
+    puuid: String, //puuid ul player ul principal (cel cautat)
   },
   setup() {
     const toggle = reactive({

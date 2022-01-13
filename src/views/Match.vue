@@ -30,6 +30,7 @@
               :match="account.matchData[index]"
               :summonersPuuid="account.dataAccount.puuid"
               :region="data.region"
+              :continent="data.continent"
               :queueJson="account.queue"
               :spellsJson="account.spells"
               :runesJson="account.runes"
