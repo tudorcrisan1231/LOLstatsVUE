@@ -583,7 +583,7 @@
                                         Cost:
                                         {{
                                         this.itemsData.data[
-                                            this.matchData.info.participants[index][j]
+                                            this.matchData.info.participants[index][j] 
                                         ].gold.total
                                         }}
                                     </p>
