@@ -1,5 +1,5 @@
 <template>
-  <div class="match" style="display:flex; flex-direction:column;">
+  <div class="match" style="display:flex; flex-direction:column;"> 
     <div v-if="mainPlayer.poz != null" style="width: 100%" :class="match.info.gameDuration<250 ? 'remake' : (match.info.participants[mainPlayer.poz].win ? 'win' : 'lose')">
       <div class="match_details">
 
@@ -13,8 +13,8 @@
           <p>{{ mainPlayer.gameTimeAgo }} ago</p>
         </div>
 
-        <div class="match_details_champ">
-          <p>{{ match.info.participants[mainPlayer.poz].championName }}</p>
+        <div class="match_details_champ" >
+          <p v-if="mainPlayer.realChampsNames[mainPlayer.poz]">{{ mainPlayer.realChampsNames[mainPlayer.poz].name }}</p>
           <img
             :src="
               'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' +
@@ -309,8 +309,8 @@
 
       </div>
 
-      <div v-if="mainPlayer.toggleAdvancedDetails">
-        <match_history_advancedDetails_nav :matchInfo="this.match" :itemsInfo="this.itemsJson" :spellsInfo="this.spellsJson" :runesInfo="this.runesJson" :regionInfo="this.region" :continentInfo="this.continent" :puuid="this.summonersPuuid"></match_history_advancedDetails_nav>
+      <div v-if="mainPlayer.toggleAdvancedDetails && mainPlayer.realChampsNames">
+        <match_history_advancedDetails_nav :matchInfo="this.match" :itemsInfo="this.itemsJson" :spellsInfo="this.spellsJson" :runesInfo="this.runesJson" :regionInfo="this.region" :continentInfo="this.continent" :puuid="this.summonersPuuid" :champsData="mainPlayer.realChampsNames"></match_history_advancedDetails_nav>
       </div>
 
     </div>
@@ -322,6 +322,7 @@
 import { reactive } from "vue";
 import Popper from "vue3-popper";
 import match_history_advancedDetails_nav from "../components/match_history_advancedDetails_nav.vue";
+import axios from "axios";
 
 export default {
   name: "matchData",
@@ -351,6 +352,7 @@ export default {
       runePrimary: [], // pe pozitia 0 am runa in sine, pe poz 1 am descrierea, pe poz 2 am numele
       runeSecondary: [],
       toggleAdvancedDetails: false,
+      realChampsNames: [],  //un array cu toate numele reale ale campionilor, pt ca unii nu corespund ex: MonkeyKing - Wukong
     });
 
     // const items = reactive({
@@ -361,6 +363,16 @@ export default {
     //   item5:null,
     //   item6:null,
     // });
+
+    async function getRealChampsName(){
+      for(let i = 0; i < this.match.info.participants.length; i++)
+        await axios(
+          `https://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/champion/${this.match.info.participants[i].championName}.json`
+        ).then((res) => {
+          mainPlayer.realChampsNames.push(res.data.data[this.match.info.participants[i].championName]); 
+          // console.log(res.data.data[this.match.info.participants[i].championName]);
+        });
+    }
 
     function getMainPlayer() {
       for (let i = 0; i < this.match.metadata.participants.length; i++) {
@@ -506,6 +518,7 @@ export default {
       getTime,
       msToTime,
       kp,
+      getRealChampsName
     };
   },
   mounted() {
@@ -514,6 +527,8 @@ export default {
     this.msToTime(new Date().getTime() - this.match.info.gameEndTimestamp);
 
     this.kp();
+
+    this.getRealChampsName();
   },
 };
 </script>

@@ -17,7 +17,7 @@
     <div class="advanced_champ_list" v-for="(i,index) in this.matchData.info.participants" :key="i">
       <div class="advanced_champ_box">
         <img :src="'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' + this.matchData.info.participants[index].championId + '.png'" alt="lol stats img">
-        <p>{{this.matchData.info.participants[index].championName}}</p>
+        <p style="white-space: nowrap;">{{this.champsInfo[index].name}}</p>
       </div>
     </div>
   </div>
@@ -167,6 +167,7 @@ export default {
   },
   props: {
     matchData: Object,
+    champsInfo: Array,
   },
   setup() {
     const stats = reactive({

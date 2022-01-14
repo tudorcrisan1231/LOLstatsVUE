@@ -89,7 +89,7 @@
                         </div>
                         <template #content>
                             <div style="max-width: 400px">
-                                <p>{{this.matchData.info.participants[index].championName}}</p>
+                                <p>{{this.champsInfo[index].name}}</p>
                             </div>
                         </template>
                     </Popper>
@@ -386,7 +386,7 @@
                         </div>
                         <template #content>
                             <div style="max-width: 400px">
-                                <p>{{this.matchData.info.participants[index].championName}}</p>
+                                <p>{{this.champsInfo[index].name}}</p>
                             </div>
                         </template>
                     </Popper>
@@ -629,6 +629,7 @@ export default {
         spellsData: Object,
         runesData: Object,
         regionData: String,
+        champsInfo: Array,
     },
     setup() {
         const teamBlue = reactive({
