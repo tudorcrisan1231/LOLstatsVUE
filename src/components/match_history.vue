@@ -365,13 +365,23 @@ export default {
     // });
 
     async function getRealChampsName(){
-      for(let i = 0; i < this.match.info.participants.length; i++)
-        await axios(
-          `https://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/champion/${this.match.info.participants[i].championName}.json`
-        ).then((res) => {
-          mainPlayer.realChampsNames.push(res.data.data[this.match.info.participants[i].championName]); 
-          // console.log(res.data.data[this.match.info.participants[i].championName]);
-        });
+      for(let i = 0; i < this.match.info.participants.length; i++){
+        if(this.match.info.participants[i].championName == "FiddleSticks") {
+          await axios(
+            `https://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/champion/Fiddlesticks.json`
+          ).then((res) => {
+            mainPlayer.realChampsNames.push(res.data.data['Fiddlesticks']); 
+          });
+        } else {
+          await axios(
+            `https://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/champion/${this.match.info.participants[i].championName}.json`
+          ).then((res) => {
+            mainPlayer.realChampsNames.push(res.data.data[this.match.info.participants[i].championName]); 
+            // console.log(res.data.data[this.match.info.participants[i].championName]);
+          });
+        }
+      }
+
     }
 
     function getMainPlayer() {

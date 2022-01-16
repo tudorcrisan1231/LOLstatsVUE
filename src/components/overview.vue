@@ -84,7 +84,7 @@
 
                     <Popper placement="top" arrow hover>
                         <div class="team_player_level">
-                            <img :src="'http://ddragon.leagueoflegends.com/cdn/'+this.lol_version+'/img/champion/'+this.matchData.info.participants[index].championName+'.png'" alt="champion_icon">
+                            <img :src="'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' + this.matchData.info.participants[index].championId + '.png'" alt="lol stats img">
                             <p>{{this.matchData.info.participants[index].champLevel}}</p>
                         </div>
                         <template #content>
@@ -381,7 +381,7 @@
                 <div class="team_player" v-if="index >= 5">
                     <Popper placement="top" arrow hover>
                         <div class="team_player_level">
-                            <img :src="'http://ddragon.leagueoflegends.com/cdn/'+this.lol_version+'/img/champion/'+this.matchData.info.participants[index].championName+'.png'" alt="champion_icon">
+                            <img :src="'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' + this.matchData.info.participants[index].championId + '.png'" alt="lol stats img">
                             <p>{{this.matchData.info.participants[index].champLevel}}</p>
                         </div>
                         <template #content>

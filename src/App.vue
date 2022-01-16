@@ -66,4 +66,9 @@ body {
 *::before {
   box-sizing: inherit;
 }
+.loading_spin{
+  width: 4rem;
+  height: 4rem;
+  margin: 2rem 0 2rem 0;
+}
 </style>
