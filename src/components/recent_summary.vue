@@ -1,8 +1,9 @@
 <template>
   <div class="recent" v-if="this.allMatches">
-    <div>{{this.allMatches[0].info.gameMode}}</div>
+    <div>{{this.allMatches[4].info.participants[0].championName}}</div>
     <p>salut</p>
   </div>
+
 </template>
 
 <script>
