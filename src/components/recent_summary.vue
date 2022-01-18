@@ -1,15 +1,38 @@
 <template>
-  <div class="recent">
-    <div>recent summary</div>
+  <div class="recent" v-if="this.allMatches">
+    <div>{{this.allMatches[0].info.gameMode}}</div>
+    <p>salut</p>
   </div>
 </template>
 
 <script>
+import Popper from "vue3-popper";
+import { reactive } from "vue";
 export default {
   name: "recent_summary",
-  props: {
-    match: Object,
+  components: {
+    Popper,
   },
+  props: {
+    allMatches: Object, //toate meciurile pt a le face analiza
+    puuid: String,
+  },
+  setup(){
+    const matches = reactive({
+      data: null,
+    });
+    function getData(){
+       console.log(this.allMatches[0].info.gameMode);
+    }
+
+    return{
+      matches,
+      getData,
+    }
+  },
+  mounted(){
+    this.getData();
+  }
 };
 </script>
 

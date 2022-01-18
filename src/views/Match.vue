@@ -20,8 +20,8 @@
         <liveGame :regionLive="data.region" :accountIdLive="account.dataAccount" :spellsJsonLive="account.spells" :queueJsonLive="account.queue" :runesJsonLive="account.runes"></liveGame>
       </div>
 
-      <div class="about_right_summary">
-        <recent_summary></recent_summary>
+      <div class="about_right_summary" v-if="account.matchData.length!=0 && account.dataAccount">
+        <recent_summary :allMatches="account.matchData" :puuid="account.dataAccount.puuid"></recent_summary>
       </div>
       <div class="about_right_matchesList">
         <div v-for="(i, index) in account.matchData" :key="i">
