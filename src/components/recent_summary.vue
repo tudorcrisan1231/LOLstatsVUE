@@ -1,7 +1,19 @@
 <template>
   <div class="recent" v-if="this.allMatches">
-    <div>{{this.allMatches[4].info.participants[0].championName}}</div>
-    <p>salut</p>
+    <div class="recent_title">
+      <h4>RECENT SUMMARY</h4> 
+      <p>(last {{this.nr_meciuri}} games):</p> 
+    </div>
+
+
+    <div class="recent_summary">
+
+    </div>
+
+
+    <div class="recent_title">
+      <h4>PERFORMANCE OVERVIEW:</h4> 
+    </div>
   </div>
 
 </template>
@@ -20,10 +32,17 @@ export default {
   },
   setup(){
     const matches = reactive({
-      data: null,
+      mainPlayerPoz:[], //array with all postion of main player in all matches
     });
     function getData(){
-       console.log(this.allMatches[0].info.gameMode);
+      //get main player poz array
+      for(let i = 0; i<this.allMatches.length; i++){
+        for(let j = 0; j < this.allMatches[i].metadata.participants.length; j++){
+          if(this.puuid == this.allMatches[i].metadata.participants[j]){
+            matches.mainPlayerPoz.push(j);
+          }
+        }
+      }
     }
 
     return{
@@ -42,5 +61,13 @@ export default {
 .recent {
   height: 20rem;
   padding: .5rem;
+
+  &_title{
+    display: flex;
+
+    h4{
+      margin-right: .5rem;
+    }
+  }
 }
 </style>
