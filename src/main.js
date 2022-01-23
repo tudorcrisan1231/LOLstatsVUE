@@ -6,6 +6,6 @@ import VueChartkick from 'vue-chartkick'
 import 'chartkick/chart.js'
 
 let app = createApp(App);
-app.config.globalProperties.lol_version = "12.1.1"; ///variabila globala cu versiunea jocului
+app.config.globalProperties.lol_version = "12.2.1"; ///variabila globala cu versiunea jocului
 app.config.globalProperties.nr_meciuri = 10; ///la cate meciuri se face request la sv
 app.use(router).use(VueChartkick).mount("#app");

@@ -8,9 +8,6 @@
 
     <div class="recent_summary" style="padding:4rem">
       <pie-chart :data="[['Blueberry', 44], ['Strawberry', 23]]" :colors="['rgb(32,178,170)', 'rgb(240, 128, 128)']" width="100px" height="100px" :donut="true" :legend="false"></pie-chart>
-      <!-- <bar-chart :data="[['X-Small', 5], ['Small', 27]]"></bar-chart> -->
-      <!-- <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]"></column-chart> -->
-
     </div>
 
 
