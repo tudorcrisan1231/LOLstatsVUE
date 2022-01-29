@@ -84,8 +84,8 @@
 
     <div class="recent_overview">
       <div>
-        <h3 class="name_yellow">{{(matches.vision_score / (matches.wins + matches.defeats)).toFixed(2)}}</h3>
-        <p>Vision score / game</p>
+        <h3 class="name_yellow">{{(matches.firstBloodTimes * 100 / (matches.wins + matches.defeats)).toFixed(1)}}%</h3>
+        <p>First Blood %</p>
       </div>
       <div>
         <h3 class="name_yellow">{{(matches.gold / (matches.wins + matches.defeats)).toFixed(2)}}</h3>
@@ -100,9 +100,10 @@
         <p>Control wards / game</p>
       </div>
       <div>
-        <h3 class="name_yellow">{{(matches.firstBloodTimes * 100 / (matches.wins + matches.defeats)).toFixed(1)}}%</h3>
-        <p>First Blood %</p>
+        <h3 class="name_yellow">{{(matches.vision_score / (matches.wins + matches.defeats)).toFixed(2)}}</h3>
+        <p>Vision score / game</p>
       </div>
+
     </div>
   </div>
 
@@ -189,7 +190,9 @@ export default {
 
 
         //get lanes
-        matches.lane.push(this.allMatches[i].info.participants[matches.mainPlayerPoz[i]].individualPosition);
+        if(this.allMatches[i].info.participants[matches.mainPlayerPoz[i]].individualPosition !='Invalid'){
+          matches.lane.push(this.allMatches[i].info.participants[matches.mainPlayerPoz[i]].individualPosition);
+        }
 
         //get champs
         matches.champs.push(this.allMatches[i].info.participants[matches.mainPlayerPoz[i]].championId);
@@ -351,6 +354,10 @@ export default {
     justify-items: center;
     margin-bottom: 2rem;
 
+    @media screen and (max-width: 650px){
+      grid-template-columns: 1fr 1fr;
+    }
+
     &>*{
       background-color: var(--color-remake01);
       border-radius: 5px;
@@ -362,6 +369,10 @@ export default {
 
     &>*:not(:last-child) {
       margin-right: 1rem;
+      @media screen and (max-width: 650px){
+        margin-right: 0;
+        margin-bottom: 2rem;
+      }
     }
 
     &_total{
@@ -384,11 +395,19 @@ export default {
     &_champs{
       font-size: 1.3rem;
       //text-align: left;
+      @media screen and (max-width: 650px){
+        grid-column: 1/-1;
+      }
       &_1, &_2{
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: left;
+        @media screen and (max-width: 650px){
+          padding: 1rem;
+        }
+        
+
 
         img{
           width: 4rem;
@@ -399,15 +418,43 @@ export default {
       &_1{
         margin-top: 1rem;
         margin-bottom: 1rem;
+        @media screen and (max-width: 650px){
+          float: left;
+          margin: 0;
+        }
+        @media screen and (max-width: 450px){
+          float: none;
+        }
+      }
+      &_2{
+        @media screen and (max-width: 650px){
+          float: right;
+        }
+        @media screen and (max-width: 450px){
+          float: none;
+        }
       }
     }
   }
 
   &_overview{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr  1fr 1fr max-content max-content;
+    align-items: stretch;
+    
+    gap: 1rem;
     text-align: center;
+  
+    @media screen and (max-width: 600px){
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media screen and (max-width: 500px){
+      grid-template-columns: 1fr 1fr;
+    }
+    @media screen and (max-width: 350px){
+      grid-template-columns: 1fr;
+    }
 
     &>*{
       background-color: var(--color-remake01);
@@ -416,6 +463,12 @@ export default {
       width: 100%;
      -webkit-box-shadow: 2px 2px 29px 6px rgba(0,0,0,0.25); 
       box-shadow: 2px 2px 29px 6px rgba(0,0,0,0.25);
+
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+
     }
     &>*:not(:last-child) {
       margin-right: .5rem;
