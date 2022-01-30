@@ -1,5 +1,10 @@
 <template>
   <div class="champs">
+      <div class="champs_search">
+        <input type="text" class="champs_search_input" placeholder="Search for a champion">
+        <button type="submit" class="champs_search_btn"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 9 9a9.01 9.01 0 0 1-9-9z" fill="currentColor"/></svg></button>
+      </div>
+
       <div v-for="(i,index) in this.champs_points" :key="i">
         <div class="champs_icon">
           <img class="champs_img" :src="'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' + this.champs_points[index].championId + '.png'" alt="champ_img">
@@ -49,6 +54,7 @@ export default {
     const champs = reactive({
       data:[],
       time:[],
+      
     });
 
     async function getData(){
@@ -86,6 +92,31 @@ export default {
   font-size: 1.4rem;
   //padding: 1rem 0rem 1rem 0rem;
 
+  &_search{
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    padding: 1rem;
+
+    &_input{
+      padding: .5rem;
+      font-family: inherit;
+      border: none;
+      outline: none;
+    }
+
+    &_btn{
+      padding: 1rem 1.5rem 1rem 1.5rem;
+      cursor: pointer;
+      border: none;
+      background-color: var(--color-win);
+      color: #fff;
+      svg{
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+
   @media screen and (max-width: 1000px){
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -97,7 +128,7 @@ export default {
   }
 
 
-  &>*{
+  &>*:not(:first-child){
     padding: .2rem 1rem .2rem 1rem;
 
     display: grid;
