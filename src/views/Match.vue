@@ -12,6 +12,13 @@
         :rank_solo="account.dataRank_solo"
         :rank_flex="account.dataRank_flex"
       ></ranks>
+
+      <div v-if="account.champs_points.length==10" class="about_left_champs">  <!--pun 10, pt ca presupun ca toate lumea are cel putin 10 campioni cu care au jucat macar odata-->
+        <champsPoints :champs_points="account.champs_points"></champsPoints>
+      </div>
+      <div class="about_left_champs" v-else style="display:flex; align-items:center; justify-content:center;">
+        <svg class="loading_spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><circle cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(45 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.125s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(90 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.25s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(135 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.375s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(180 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(225 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.625s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(270 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.75s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(315 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.875s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle></svg>
+      </div>
     </div>
 
     <div class="about_right">
@@ -59,6 +66,7 @@ import ranks from "../components/ranks.vue";
 import recent_summary from "../components/recent_summary.vue";
 import matchData from "../components/match_history.vue";
 import liveGame from "../components/liveGame.vue";
+import champsPoints from '../components/champs_details.vue';
 
 export default {
   name: "Match",
@@ -68,6 +76,7 @@ export default {
     recent_summary: recent_summary,
     matchData: matchData,
     liveGame: liveGame,
+    champsPoints: champsPoints,
   },
   setup() {
     const data = reactive({
@@ -89,6 +98,7 @@ export default {
       runes: null, // runes json
       items: null, //items json
       openLiveGame:false,
+      champs_points:[],
     });
 
     function getRegion() {
@@ -189,6 +199,19 @@ export default {
       }
       console.log(account.matchData);
 
+      await axios(
+        `http://localhost:3000/champs_points/${data.region}/${account.dataAccount.id}` 
+      ) // champs points
+        .then((res) => {
+          for(let i = 0; i<10; i++){
+            if(res.data[i]){
+              account.champs_points.push(res.data[i]);
+            }
+          }
+          //console.log(res.data);
+        });
+      
+
     }
 
     return {
@@ -280,6 +303,12 @@ export default {
 
       @media screen and (max-width: 500px) {
         font-weight: normal;
+      }
+    }
+
+    &_champs{
+      @media screen and (max-width: 1000px) {
+        grid-column: 1/-1;
       }
     }
 

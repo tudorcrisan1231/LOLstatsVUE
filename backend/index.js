@@ -125,6 +125,42 @@ app.get("/timeline/:region/:gameID", async (request, response) => {
   });
 });
 
+//
+
+//CHAMPION-MASTERY-V4 champs points
+app.get("/champs_points/:region/:summonerID", async (request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+
+  const summonerID = request.params.summonerID;
+  const region = request.params.region;
+  //console.log(gameID);
+
+  axios(
+    `https://${region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${summonerID}?api_key=${api_key}`
+  ).then((res) => {
+    response.send(res.data);
+    //console.log(res.data);
+  });
+});
+
+//
+
+//Champs data from ID (communitydragon)
+app.get("/champ_data/:champID", async (request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+
+  const champID = request.params.champID;
+  //console.log(gameID);
+
+  axios(
+    `http://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champions/${champID}.json`
+  ).then((res) => {
+    response.send(res.data);
+    //console.log(res.data);
+  });
+});
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
