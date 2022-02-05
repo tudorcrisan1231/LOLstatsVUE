@@ -161,6 +161,74 @@ app.get("/champ_data/:champID", async (request, response) => {
 });
 
 
+//Champs points (for single champs)
+app.get("/champ_points/:region/:summonerID/:champID", async (request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+
+  const region = request.params.region;
+  const champID = request.params.champID;
+  const summonerID = request.params.summonerID;
+  //console.log(gameID);
+
+  axios(
+    `https://${region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${summonerID}/by-champion/${champID}?api_key=${api_key}`
+  ).then((res) => {
+    response.send(res.data);
+    //console.log(res.data);
+  }).catch(function (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      response.send(error.response.data);
+      response.send(error.response.status);
+      response.send(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      response.send(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      response.send('Error', error.message);
+    }
+    response.send(error.config);
+  });
+});
+
+
+
+//https://ddragon.leagueoflegends.com/cdn/12.3.1/data/en_US/champion/Ekko.json
+app.get("/champ_points_byName/:champName", async (request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+
+  const champName = request.params.champName;
+  //console.log(gameID);
+
+  axios(
+    `https://ddragon.leagueoflegends.com/cdn/12.3.1/data/en_US/champion/${champName}.json`
+  ).then((res) => {
+    response.send(res.data);
+    //console.log(res.data);
+  }).catch(function (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      response.send(error.response.data);
+      response.send(error.response.status);
+      response.send(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      response.send(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      response.send('Error', error.message);
+    }
+    response.send(error.config);
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
