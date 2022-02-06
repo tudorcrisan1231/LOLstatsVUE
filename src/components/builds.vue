@@ -143,7 +143,7 @@
           </tr>
         </table>
 
-        <div class="skill">
+        <div class="skill" style="display:flex; justify-content: center;">
           <div v-for="(j,poz) in data.skills" :key="j" class="skill_box">
             <div>
               <Popper placement="top" hover>
