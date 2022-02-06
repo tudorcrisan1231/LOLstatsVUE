@@ -1,10 +1,14 @@
 <template>
   <div class="about">
     <div class="about_left">
-      <base-stats
-        :data="account.dataAccount"
-        class="about_left_profile"
-      ></base-stats>
+      <div v-if="data.region">
+        <base-stats
+          :data="account.dataAccount"
+          :region="data.region"
+          class="about_left_profile"
+        ></base-stats>
+      </div>
+
 
       <button @click="account.openLiveGame = !account.openLiveGame" class="about_left_liveBtn">Live Game!</button>
       <ranks

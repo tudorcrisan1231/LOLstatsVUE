@@ -42,6 +42,7 @@ export default {
   name: "baseStats",
   props: {
     data: Object,
+    region: String,
   },
   data() {
     return {
@@ -75,6 +76,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.hidden{
+  display: none;
+}
 .profile {
   color: #fffffe;
   background-color: #242629;
