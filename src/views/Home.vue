@@ -64,6 +64,18 @@
       </button>
     </form>
 
+
+    <div class="bookmark" v-if="this.dataLocalStorage">
+      <p class="bookmark_title">Favorites:</p>
+      <div v-for="(i,index) in this.dataLocalStorage" :key="i" class="bookmark_player">
+        <a :href="'/'+this.dataLocalStorage[index][0]+'/'+this.dataLocalStorage[index][1]">
+          <img :src="'http://ddragon.leagueoflegends.com/cdn/12.3.1/img/profileicon/' +  this.dataLocalStorage[index][2] + '.png'" alt="">
+          <p>{{this.dataLocalStorage[index][1]}}</p>
+          <p style="text-transform:uppercase;">#{{this.dataLocalStorage[index][0]}}</p>
+        </a>
+      </div>
+    </div>
+
     <div class="free_to_play_container">
       <h4 class="free_to_play_title">Free to play champions:</h4>
       <div class="free_to_play">
@@ -125,6 +137,7 @@ export default {
       //data
       dataFreeChamps: "",
       freeChampsName: null,
+      dataLocalStorage: null,
     });
 
     const regions = ref([
@@ -186,6 +199,13 @@ export default {
       },
     ]);
 
+
+    function getDataFromLocalStorage(){
+      if(JSON.parse(localStorage.getItem('region_name'))){
+        this.dataLocalStorage = JSON.parse(localStorage.getItem('region_name'));
+      }
+    }
+
     function getFreeToPlay() {
       axios(`http://localhost:3000/champion-v3`) // free champs rotation
         .then((res) => {
@@ -210,10 +230,12 @@ export default {
       regions,
       news,
       getChampsName,
+      getDataFromLocalStorage,
     };
   },
   mounted() {
     this.getFreeToPlay();
+    this.getDataFromLocalStorage();
   },
 };
 </script>

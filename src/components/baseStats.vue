@@ -1,5 +1,5 @@
 <template>
-  <div class="profile" v-if="data">
+  <div class="profile" v-if="this.data">
     <div class="profile_img">
       <img
         :src="
@@ -15,6 +15,8 @@
         {{ data.name }}
         <svg
           class="bookmark"
+          :class="this.saved == true ? 'hidden' : ''"
+          @click="saveToLocalStorage()"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           aria-hidden="true"
@@ -30,6 +32,7 @@
             />
           </g>
         </svg>
+        <svg class="bookmark_remove" :class="this.saved == false ? 'hidden' : ''" @click="deleteFromLocalStorage()" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="var(--color-win)"><path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/></g></svg>
       </h1>
       <p>Level: {{ data.summonerLevel }}</p>
       <p>Last updated: {{ this.time }}</p>
@@ -48,6 +51,8 @@ export default {
     return {
       time: "",
       bookmarkVar: 0,
+      localStorageData:[],
+      saved:false,
     };
   },
   methods: {
@@ -67,10 +72,86 @@ export default {
         }
       }
     },
+
+    getDataFromLocalStorage(){
+      console.log(JSON.parse(localStorage.getItem('region_name')));
+    },
+
+
+    checkLocalStorage(){
+      let dataFromLocalStorage = JSON.parse(localStorage.getItem('region_name') || '[]');
+      if(this.data){
+        for(let i = 0 ;i < dataFromLocalStorage.length; i++){
+          if(dataFromLocalStorage[i][0] == this.region && dataFromLocalStorage[i][1] == this.data.name){
+            this.saved=true;
+            break;
+          }
+        }
+        console.log(this.saved);
+      }
+
+    },
+
+    saveToLocalStorage(){
+      document.querySelector('.bookmark').classList.add('hidden');
+      document.querySelector('.bookmark_remove').classList.remove('hidden');
+
+      let dataFromLocalStorage = JSON.parse(localStorage.getItem('region_name') || '[]');
+      this.localStorageData=[];
+
+      if(dataFromLocalStorage) {
+        for(let i = 0; i<dataFromLocalStorage.length;i++){
+          this.localStorageData.push(dataFromLocalStorage[i]);
+        }
+      }
+
+
+      this.localStorageData.push([this.region,this.data.name, this.data.profileIconId]);
+      console.log(this.localStorageData);
+
+
+
+      localStorage.setItem('region_name', JSON.stringify(this.localStorageData));
+
+    },
+    deleteFromLocalStorage(){
+      document.querySelector('.bookmark').classList.remove('hidden');
+      document.querySelector('.bookmark_remove').classList.add('hidden');
+
+      let dataFromLocalStorage = JSON.parse(localStorage.getItem('region_name') || '[]');
+      this.localStorageData=[];
+
+
+      if(dataFromLocalStorage) {
+        for(let i = 0; i<dataFromLocalStorage.length;i++){
+          this.localStorageData.push(dataFromLocalStorage[i]);
+        }
+      }
+      console.log(this.localStorageData);
+
+      for(let i = 0; i < this.localStorageData.length; i++) {
+        if(this.localStorageData[i][0] == this.region && this.localStorageData[i][1] == this.data.name){
+          this.localStorageData.splice(i, 1);
+//console.log(i);
+        }
+      }
+
+      console.log(this.localStorageData);
+
+      localStorage.setItem('region_name', JSON.stringify(this.localStorageData));
+
+
+    }
   },
   updated() {
     this.msToTime(new Date().getTime() - this.data.revisionDate);
+    this.checkLocalStorage();
   },
+  mounted(){
+    this.getDataFromLocalStorage();
+    this.localStorageData=[];
+    
+  }
 };
 </script>
 
