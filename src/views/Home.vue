@@ -65,14 +65,16 @@
     </form>
 
 
-    <div class="bookmark" v-if="this.dataLocalStorage">
+    <div class="bookmark" v-if="int.dataLocalStorage != null && int.dataLocalStorage.length!=0">
       <p class="bookmark_title">Favorites:</p>
-      <div v-for="(i,index) in this.dataLocalStorage" :key="i" class="bookmark_player">
-        <a :href="'/'+this.dataLocalStorage[index][0]+'/'+this.dataLocalStorage[index][1]">
-          <img :src="'http://ddragon.leagueoflegends.com/cdn/12.3.1/img/profileicon/' +  this.dataLocalStorage[index][2] + '.png'" alt="">
-          <p>{{this.dataLocalStorage[index][1]}}</p>
-          <p style="text-transform:uppercase;">#{{this.dataLocalStorage[index][0]}}</p>
-        </a>
+      <div class="bookmark_player_container">
+        <div v-for="(i,index) in int.dataLocalStorage" :key="i" class="bookmark_player">
+          <a :href="'/'+int.dataLocalStorage[index][0]+'/'+int.dataLocalStorage[index][1]">
+            <img :src="'http://ddragon.leagueoflegends.com/cdn/12.3.1/img/profileicon/' +  int.dataLocalStorage[index][2] + '.png'" alt="">
+            <p>{{int.dataLocalStorage[index][1]}}</p>
+            <p style="text-transform:uppercase;"> #{{int.dataLocalStorage[index][0]}}</p>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -138,6 +140,7 @@ export default {
       dataFreeChamps: "",
       freeChampsName: null,
       dataLocalStorage: null,
+      isData: false,
     });
 
     const regions = ref([
@@ -202,7 +205,10 @@ export default {
 
     function getDataFromLocalStorage(){
       if(JSON.parse(localStorage.getItem('region_name'))){
-        this.dataLocalStorage = JSON.parse(localStorage.getItem('region_name'));
+        int.dataLocalStorage = JSON.parse(localStorage.getItem('region_name'));
+        int.isData = true;
+      } else{
+        int.isData = false;
       }
     }
 
