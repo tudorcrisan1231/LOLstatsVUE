@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="about" v-if="account.dataAccount!==null">
     <div class="about_left">
       <div v-if="data.region">
         <base-stats
@@ -57,6 +57,27 @@
       </div>
     </div>
   </div>
+  <div v-else class="profile_notFound">
+    <div>
+      <p class="profile_notFound_title"><span style="color:var(--color-win);">'{{data.name}}'</span> is not registered at <span style="color:var(--color-win);">'{{data.region}}'</span>. Please check spelling or region.</p>
+      <div v-for="(i,index) in data.notFound" :key="i" class="profile_notFound_player">
+        <p class="profile_notFound_player_region">{{data.notFound[index][1]}}:</p>
+
+        <div v-if="data.notFound[index][0]=='no'">
+          <p>-</p>
+        </div>
+        <div v-else>
+          <a :href="'/' +data.notFound[index][1] +'/' +data.notFound[index][0].name"  class="profile_notFound_player_item" target="_blank">
+            <img :src="'http://ddragon.leagueoflegends.com/cdn/12.3.1/img/profileicon/'+data.notFound[index][0].profileIconId+'.png'" alt="">
+            <p>{{data.notFound[index][0].name}}</p>
+            <p>-</p>
+            <p>Level: {{data.notFound[index][0].summonerLevel}}</p>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -89,6 +110,8 @@ export default {
       name: "",
       region: "",
       continent: "",
+      notFound:[], //vector cu datele despre cont daca nu a fost gasit pe o regiune(ex daca caut Sm03KeR pe euw1, nu o sa l gaseasca, asa ca o sa caute pe toate celelalte regiuni, daca il gaseste pe una baga datele)
+      regions:['eun1','tr','euw1','ru','na1','br1','la1','la2','oc1','jp1','kr'],
     });
 
     const account = reactive({
@@ -127,33 +150,36 @@ export default {
     }
 
     async function getData() {
-      axios("https://static.developer.riotgames.com/docs/lol/queues.json").then(
-        (res) => {
-          account.queue = res.data;
+
+      
+        axios("https://static.developer.riotgames.com/docs/lol/queues.json").then(
+          (res) => {
+            account.queue = res.data;
+            console.log(res.data);
+          }
+        );
+
+        axios(
+          `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/summoner.json`
+        ).then((res) => {
+          account.spells = res.data;
           console.log(res.data);
-        }
-      );
+        });
 
-      axios(
-        `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/summoner.json`
-      ).then((res) => {
-        account.spells = res.data;
-        console.log(res.data);
-      });
+        axios(
+          `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/runesReforged.json`
+        ).then((res) => {
+          account.runes = res.data;
+          console.log(res.data);
+        });
 
-      axios(
-        `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/runesReforged.json`
-      ).then((res) => {
-        account.runes = res.data;
-        console.log(res.data);
-      });
+        axios(
+          `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/item.json`
+        ).then((res) => {
+          account.items = res.data;
+          console.log(res.data);
+        });
 
-      axios(
-        `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/item.json`
-      ).then((res) => {
-        account.items = res.data;
-        console.log(res.data);
-      });
 
       //get data from backend
       await axios(
@@ -162,60 +188,98 @@ export default {
         )}` //ii pun encodeURI pt ca daca numele are caractere speciale il transforma in caractere care pot fi citite de pc
       ) // account details
         .then((res) => {
-          account.dataAccount = res.data;
-          console.log(res.data);
-        });
-
-      await axios(
-        `http://localhost:3000/league-v4/${data.region}/${account.dataAccount.id}`
-      ) // rank details
-        .then((res) => {
-          console.log(res.data);
-
-          for (let i = 0; i < res.data.length; i++) {
-            if (res.data[i].queueType === "RANKED_SOLO_5x5") {
-              account.dataRank_solo = res.data[i];
-            }
+          //account.dataAccount = res.data;
+          if(res.data.hasOwnProperty('status')){
+            account.dataAccount = null;
+          } else {
+            account.dataAccount = res.data;
           }
-          for (let i = 0; i < res.data.length; i++) {
-            if (res.data[i].queueType === "RANKED_FLEX_SR") {
-              account.dataRank_flex = res.data[i];
-            }
-          }
-        });
-
-      await axios(
-        `http://localhost:3000/match-history-v5/${data.continent}/${account.dataAccount.puuid}`
-      ) // match history
-        .then((res) => {
-          account.matchHistory = res.data;
           console.log(res.data);
         });
 
-      for (let i = 0; i < account.matchHistory.length; i++) {
+      if(account.dataAccount != null){
         await axios(
-          `http://localhost:3000/match-data-v5/${data.continent}/${account.matchHistory[i]}`
-        ) // match data
+          `http://localhost:3000/league-v4/${data.region}/${account.dataAccount.id}`
+        ) // rank details
           .then((res) => {
-            account.matchData.push(res.data);
+            console.log(res.data);
+
+            for (let i = 0; i < res.data.length; i++) {
+              if (res.data[i].queueType === "RANKED_SOLO_5x5") {
+                account.dataRank_solo = res.data[i];
+              }
+            }
+            for (let i = 0; i < res.data.length; i++) {
+              if (res.data[i].queueType === "RANKED_FLEX_SR") {
+                account.dataRank_flex = res.data[i];
+              }
+            }
+          });
+
+        await axios(
+          `http://localhost:3000/match-history-v5/${data.continent}/${account.dataAccount.puuid}`
+        ) // match history
+          .then((res) => {
+            account.matchHistory = res.data;
             console.log(res.data);
           });
-      }
-      console.log(account.matchData);
 
-      await axios(
-        `http://localhost:3000/champs_points/${data.region}/${account.dataAccount.id}` 
-      ) // champs points
-        .then((res) => {
-          for(let i = 0; i<10; i++){
-            if(res.data[i]){
-              account.champs_points.push(res.data[i]);
+        for (let i = 0; i < account.matchHistory.length; i++) {
+          await axios(
+            `http://localhost:3000/match-data-v5/${data.continent}/${account.matchHistory[i]}`
+          ) // match data
+            .then((res) => {
+              account.matchData.push(res.data);
+              console.log(res.data);
+            });
+        }
+        console.log(account.matchData);
+
+        await axios(
+          `http://localhost:3000/champs_points/${data.region}/${account.dataAccount.id}` 
+        ) // champs points
+          .then((res) => {
+            for(let i = 0; i<10; i++){
+              if(res.data[i]){
+                account.champs_points.push(res.data[i]);
+              }
             }
-          }
-          //console.log(res.data);
-        });
+            //console.log(res.data);
+          });
+
+
+      }
+
+
+
       
 
+    }
+
+    async function getDataNotFound(){
+      
+        if(account.dataAccount == null){
+          console.log('not found');
+
+          for(let i = 0; i < data.regions.length; i++){
+          //console.log(data.regions[i]);
+           axios(
+              `http://localhost:3000/summoner-v4/${data.regions[i]}/${encodeURI(
+                data.name
+              )}`
+            ).then((res) => {
+                if(res.data.hasOwnProperty('status')){
+                  data.notFound.push(['no',data.regions[i]]);
+                  //console.log('nu are');
+                } else {
+                  data.notFound.push([res.data, data.regions[i]]);
+                  //console.log('are');
+                }
+              });
+
+          }
+          console.log(data.notFound);
+        }
     }
 
     return {
@@ -223,6 +287,7 @@ export default {
       getData,
       account,
       getRegion,
+      getDataNotFound,
     };
   },
   mounted() {
@@ -233,6 +298,8 @@ export default {
     this.getData();
 
     this.getRegion();
+
+    this.getDataNotFound();
   },
 };
 </script>

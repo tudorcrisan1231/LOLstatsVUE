@@ -33,6 +33,23 @@ app.get("/summoner-v4/:region/:name", async (request, response) => {
   ).then((res) => {
     response.send(res.data);
     console.log(res.data);
+  }).catch(function (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      response.send(error.response.data);
+      response.send(error.response.status);
+      response.send(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      response.send(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      response.send('Error', error.message);
+    }
+    response.send(error.config);
   });
 });
 
