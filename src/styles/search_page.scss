@@ -35,6 +35,12 @@ body {
     border-right: none;
     border-left: none;
   }
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    border-right: none;
+    border-left: none;
+    padding: 0 1rem 0 1rem;
+  }
 
   & > * {
     margin-bottom: 8rem;
@@ -137,6 +143,12 @@ body {
   width: auto;
   height: 35rem;
   padding-top: 4rem;
+
+  @media screen and (max-width: 600px) {
+    height: 35rem;
+    width: 100%;
+    object-fit: fill;
+  }
 }
 
 .bookmark {
