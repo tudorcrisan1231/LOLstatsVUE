@@ -6,6 +6,8 @@ const axios = require("axios");
 
 const api_key = process.env.API_KEY;
 
+const lol_version = "12.4.1";
+
 //  CHAMPION-V3   rotatia campionilor free
 app.get("/champion-v3", async (request, response) => {
   response.set("Access-Control-Allow-Origin", "*");
@@ -222,7 +224,7 @@ app.get("/champ_points_byName/:champName", async (request, response) => {
   //console.log(gameID);
 
   axios(
-    `https://ddragon.leagueoflegends.com/cdn/12.3.1/data/en_US/champion/${champName}.json`
+    `https://ddragon.leagueoflegends.com/cdn/${lol_version}/data/en_US/champion/${champName}.json`
   ).then((res) => {
     response.send(res.data);
     //console.log(res.data);
