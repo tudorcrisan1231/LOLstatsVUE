@@ -6,7 +6,7 @@ const axios = require("axios");
 
 const api_key = process.env.API_KEY;
 
-const lol_version = "12.4.1";
+const lol_version = "12.9.1";
 
 //  CHAMPION-V3   rotatia campionilor free
 app.get("/champion-v3", async (request, response) => {
