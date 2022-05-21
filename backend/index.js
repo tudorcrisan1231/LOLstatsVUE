@@ -123,7 +123,7 @@ app.get("/spectator-v4/:region/:summonerID", async (request, response) => {
     `https://${region}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${summonerID}?api_key=${api_key}`
   ).then((res) => {
     response.send(res.data);
-    //console.log(res.data);
+    // console.log(res.data.status.message);
   });
 });
 

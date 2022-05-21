@@ -1,5 +1,5 @@
 <template>
-  <div class="about" v-if="account.dataAccount!==null">
+  <div class="about" v-if="account.dataAccount !== null">
     <div class="about_left">
       <div v-if="data.region">
         <base-stats
@@ -9,35 +9,348 @@
         ></base-stats>
       </div>
 
-
-      <button @click="account.openLiveGame = !account.openLiveGame" class="about_left_liveBtn">Live Game!</button>
+      <button
+        @click="account.openLiveGame = !account.openLiveGame"
+        class="about_left_liveBtn"
+      >
+        Live Game!
+      </button>
       <ranks
         class="about_left_rank"
         :rank_solo="account.dataRank_solo"
         :rank_flex="account.dataRank_flex"
       ></ranks>
 
-      <div v-if="account.champs_points.length==10" class="about_left_champs">  <!--pun 10, pt ca presupun ca toate lumea are cel putin 10 campioni cu care au jucat macar odata-->
-        <champsPoints :champs_points="account.champs_points" :region="data.region" :summonerID="account.dataAccount.id"></champsPoints>
+      <div v-if="account.champs_points.length == 10" class="about_left_champs">
+        <!--pun 10, pt ca presupun ca toate lumea are cel putin 10 campioni cu care au jucat macar odata-->
+        <champsPoints
+          :champs_points="account.champs_points"
+          :region="data.region"
+          :summonerID="account.dataAccount.id"
+        ></champsPoints>
       </div>
-      <div class="about_left_champs" v-else style="display:flex; align-items:center; justify-content:center;">
-        <svg class="loading_spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><circle cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(45 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.125s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(90 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.25s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(135 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.375s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(180 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(225 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.625s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(270 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.75s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(315 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.875s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle></svg>
+      <div
+        class="about_left_champs"
+        v-else
+        style="display: flex; align-items: center; justify-content: center"
+      >
+        <svg
+          class="loading_spin"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          aria-hidden="true"
+          role="img"
+          width="1em"
+          height="1em"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 24 24"
+        >
+          <circle cx="12" cy="2" r="0" fill="currentColor">
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(45 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.125s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(90 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.25s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(135 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.375s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(180 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.5s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(225 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.625s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(270 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.75s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(315 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.875s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+        </svg>
       </div>
     </div>
 
     <div class="about_right">
-
-      <div class="about_right_live" v-if="data.region && account.dataAccount && account.openLiveGame">
-        <liveGame :regionLive="data.region" :accountIdLive="account.dataAccount" :spellsJsonLive="account.spells" :queueJsonLive="account.queue" :runesJsonLive="account.runes"></liveGame>
+      <div
+        class="about_right_live"
+        v-if="data.region && account.dataAccount && account.openLiveGame"
+      >
+        <liveGame
+          :regionLive="data.region"
+          :accountIdLive="account.dataAccount"
+          :spellsJsonLive="account.spells"
+          :queueJsonLive="account.queue"
+          :runesJsonLive="account.runes"
+        ></liveGame>
       </div>
 
-      <div class="about_right_summary" v-if="account.matchData.length==this.nr_meciuri && account.dataAccount">
-        <recent_summary :allMatches="account.matchData" :puuid="account.dataAccount.puuid"></recent_summary>
+      <div
+        class="about_right_summary"
+        v-if="
+          account.matchData.length == this.nr_meciuri && account.dataAccount
+        "
+      >
+        <recent_summary
+          :allMatches="account.matchData"
+          :puuid="account.dataAccount.puuid"
+        ></recent_summary>
       </div>
-      <div v-else style="display:flex; align-items:center; justify-content:center;">
-        <svg class="loading_spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><circle cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(45 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.125s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(90 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.25s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(135 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.375s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(180 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(225 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.625s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(270 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.75s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle><circle transform="rotate(315 12 12)" cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" values="0;2;0;0" dur="1s" repeatCount="indefinite" begin="0.875s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/></circle></svg>
+      <div
+        v-else
+        style="display: flex; align-items: center; justify-content: center"
+      >
+        <svg
+          class="loading_spin"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          aria-hidden="true"
+          role="img"
+          width="1em"
+          height="1em"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 24 24"
+        >
+          <circle cx="12" cy="2" r="0" fill="currentColor">
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(45 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.125s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(90 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.25s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(135 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.375s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(180 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.5s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(225 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.625s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(270 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.75s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+          <circle
+            transform="rotate(315 12 12)"
+            cx="12"
+            cy="2"
+            r="0"
+            fill="currentColor"
+          >
+            <animate
+              attributeName="r"
+              values="0;2;0;0"
+              dur="1s"
+              repeatCount="indefinite"
+              begin="0.875s"
+              keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+              calcMode="spline"
+            />
+          </circle>
+        </svg>
       </div>
-
 
       <div class="about_right_matchesList">
         <div v-for="(i, index) in account.matchData" :key="i">
@@ -59,21 +372,44 @@
   </div>
   <div v-else class="profile_notFound">
     <div>
-      <p class="profile_notFound_title"><span style="color:var(--color-win);">'{{data.name}}'</span> is not registered at <span style="color:var(--color-win);">'{{data.region}}'</span>. Please check spelling or region.</p>
-      <div v-for="(i,index) in data.notFound" :key="i" class="profile_notFound_player">
-        <p class="profile_notFound_player_region">{{data.notFound[index][1]}}:</p>
+      <p class="profile_notFound_title">
+        <span style="color: var(--color-win)">'{{ data.name }}'</span> is not
+        registered at
+        <span style="color: var(--color-win)">'{{ data.region }}'</span>. Please
+        check spelling or region.
+      </p>
+      <div
+        v-for="(i, index) in data.notFound"
+        :key="i"
+        class="profile_notFound_player"
+      >
+        <p class="profile_notFound_player_region">
+          {{ data.notFound[index][1] }}:
+        </p>
 
-        <div v-if="data.notFound[index][0]=='no'">
+        <div v-if="data.notFound[index][0] == 'no'">
           <p>-</p>
         </div>
         <div v-else>
-          <a :href="'/' +data.notFound[index][1] +'/' +data.notFound[index][0].name"  class="profile_notFound_player_item" target="_blank">
-            <img :src="'http://ddragon.leagueoflegends.com/cdn/12.3.1/img/profileicon/'+data.notFound[index][0].profileIconId+'.png'" alt="">
-            <p>{{data.notFound[index][0].name}}</p>
+          <a
+            :href="
+              '/' + data.notFound[index][1] + '/' + data.notFound[index][0].name
+            "
+            class="profile_notFound_player_item"
+            target="_blank"
+          >
+            <img
+              :src="
+                'http://ddragon.leagueoflegends.com/cdn/12.3.1/img/profileicon/' +
+                data.notFound[index][0].profileIconId +
+                '.png'
+              "
+              alt=""
+            />
+            <p>{{ data.notFound[index][0].name }}</p>
             <p>-</p>
-            <p>Level: {{data.notFound[index][0].summonerLevel}}</p>
+            <p>Level: {{ data.notFound[index][0].summonerLevel }}</p>
           </a>
-
         </div>
       </div>
     </div>
@@ -91,7 +427,7 @@ import ranks from "../components/ranks.vue";
 import recent_summary from "../components/recent_summary.vue";
 import matchData from "../components/match_history.vue";
 import liveGame from "../components/liveGame.vue";
-import champsPoints from '../components/champs_details.vue';
+import champsPoints from "../components/champs_details.vue";
 
 export default {
   name: "Match",
@@ -110,8 +446,20 @@ export default {
       name: "",
       region: "",
       continent: "",
-      notFound:[], //vector cu datele despre cont daca nu a fost gasit pe o regiune(ex daca caut Sm03KeR pe euw1, nu o sa l gaseasca, asa ca o sa caute pe toate celelalte regiuni, daca il gaseste pe una baga datele)
-      regions:['eun1','tr','euw1','ru','na1','br1','la1','la2','oc1','jp1','kr'],
+      notFound: [], //vector cu datele despre cont daca nu a fost gasit pe o regiune(ex daca caut Sm03KeR pe euw1, nu o sa l gaseasca, asa ca o sa caute pe toate celelalte regiuni, daca il gaseste pe una baga datele)
+      regions: [
+        "eun1",
+        "tr",
+        "euw1",
+        "ru",
+        "na1",
+        "br1",
+        "la1",
+        "la2",
+        "oc1",
+        "jp1",
+        "kr",
+      ],
     });
 
     const account = reactive({
@@ -124,8 +472,8 @@ export default {
       spells: null, // spells json
       runes: null, // runes json
       items: null, //items json
-      openLiveGame:false,
-      champs_points:[],
+      openLiveGame: false,
+      champs_points: [],
     });
 
     function getRegion() {
@@ -150,36 +498,33 @@ export default {
     }
 
     async function getData() {
-
-      
-        axios("https://static.developer.riotgames.com/docs/lol/queues.json").then(
-          (res) => {
-            account.queue = res.data;
-            console.log(res.data);
-          }
-        );
-
-        axios(
-          `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/summoner.json`
-        ).then((res) => {
-          account.spells = res.data;
+      axios("https://static.developer.riotgames.com/docs/lol/queues.json").then(
+        (res) => {
+          account.queue = res.data;
           console.log(res.data);
-        });
+        }
+      );
 
-        axios(
-          `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/runesReforged.json`
-        ).then((res) => {
-          account.runes = res.data;
-          console.log(res.data);
-        });
+      axios(
+        `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/summoner.json`
+      ).then((res) => {
+        account.spells = res.data;
+        console.log(res.data);
+      });
 
-        axios(
-          `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/item.json`
-        ).then((res) => {
-          account.items = res.data;
-          console.log(res.data);
-        });
+      axios(
+        `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/runesReforged.json`
+      ).then((res) => {
+        account.runes = res.data;
+        console.log(res.data);
+      });
 
+      axios(
+        `http://ddragon.leagueoflegends.com/cdn/${this.lol_version}/data/en_US/item.json`
+      ).then((res) => {
+        account.items = res.data;
+        console.log(res.data);
+      });
 
       //get data from backend
       await axios(
@@ -189,7 +534,7 @@ export default {
       ) // account details
         .then((res) => {
           //account.dataAccount = res.data;
-          if(res.data.hasOwnProperty('status')){
+          if (res.data.hasOwnProperty("status")) {
             account.dataAccount = null;
           } else {
             account.dataAccount = res.data;
@@ -197,7 +542,7 @@ export default {
           console.log(res.data);
         });
 
-      if(account.dataAccount != null){
+      if (account.dataAccount != null) {
         await axios(
           `http://localhost:3000/league-v4/${data.region}/${account.dataAccount.id}`
         ) // rank details
@@ -236,50 +581,41 @@ export default {
         console.log(account.matchData);
 
         await axios(
-          `http://localhost:3000/champs_points/${data.region}/${account.dataAccount.id}` 
+          `http://localhost:3000/champs_points/${data.region}/${account.dataAccount.id}`
         ) // champs points
           .then((res) => {
-            for(let i = 0; i<10; i++){
-              if(res.data[i]){
+            for (let i = 0; i < 10; i++) {
+              if (res.data[i]) {
                 account.champs_points.push(res.data[i]);
               }
             }
             //console.log(res.data);
           });
-
-
       }
-
-
-
-      
-
     }
 
-    async function getDataNotFound(){
-      
-        if(account.dataAccount == null){
-          console.log('not found');
+    async function getDataNotFound() {
+      if (account.dataAccount == null) {
+        console.log("not found");
 
-          for(let i = 0; i < data.regions.length; i++){
+        for (let i = 0; i < data.regions.length; i++) {
           //console.log(data.regions[i]);
-           axios(
-              `http://localhost:3000/summoner-v4/${data.regions[i]}/${encodeURI(
-                data.name
-              )}`
-            ).then((res) => {
-                if(res.data.hasOwnProperty('status')){
-                  data.notFound.push(['no',data.regions[i]]);
-                  //console.log('nu are');
-                } else {
-                  data.notFound.push([res.data, data.regions[i]]);
-                  //console.log('are');
-                }
-              });
-
-          }
-          console.log(data.notFound);
+          axios(
+            `http://localhost:3000/summoner-v4/${data.regions[i]}/${encodeURI(
+              data.name
+            )}`
+          ).then((res) => {
+            if (res.data.hasOwnProperty("status")) {
+              data.notFound.push(["no", data.regions[i]]);
+              //console.log('nu are');
+            } else {
+              data.notFound.push([res.data, data.regions[i]]);
+              //console.log('are');
+            }
+          });
         }
+        console.log(data.notFound);
+      }
     }
 
     return {
@@ -299,7 +635,7 @@ export default {
 
     this.getRegion();
 
-    this.getDataNotFound();
+    // this.getDataNotFound();
   },
 };
 </script>
@@ -342,7 +678,8 @@ export default {
   }
 
   &_right {
-    &_summary,&_live {
+    &_summary,
+    &_live {
       color: #fffffe;
       background-color: #242629;
       border: 1px solid rgba(#72757e, 0.2);
@@ -377,7 +714,7 @@ export default {
       }
     }
 
-    &_champs{
+    &_champs {
       @media screen and (max-width: 1000px) {
         grid-column: 1/-1;
       }
